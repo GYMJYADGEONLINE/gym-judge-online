@@ -13,8 +13,13 @@ const Logo = ({ size = "normal" }) => {
     <div className={`flex items-center gap-3 group cursor-pointer ${isLarge ? "flex-col scale-110 md:scale-125" : ""}`}>
       <div className="relative">
         <div className={`${isLarge ? "w-32 h-32 border-4" : "w-10 h-10 border-2"} border-slate-300 rounded-full flex items-center justify-center relative overflow-hidden bg-slate-900 shadow-xl`}>
-          <div className="absolute inset-0 bg-amber-500/10 blur-sm"></div>
-          <Shield className={`${isLarge ? "w-16 h-16" : "w-5 h-5"} text-amber-500 z-10`} fill="currentColor" fillOpacity={0.2} />
+          <div className="absolute inset-0 bg-amber-500/5 blur-sm"></div>
+          {/* Fill style fixed for compatibility */}
+          <Shield 
+            className={`${isLarge ? "w-16 h-16" : "w-5 h-5"} text-amber-500 z-10`} 
+            fill="currentColor" 
+            fillOpacity="0.1" 
+          />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className={`${isLarge ? "w-4 h-0.5" : "w-1.5 h-px"} bg-amber-500 absolute rotate-90`}></div>
             <div className={`${isLarge ? "w-4 h-0.5" : "w-1.5 h-px"} bg-amber-500 absolute`}></div>
@@ -35,20 +40,22 @@ const App = () => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
+    // Window check for safety
     if (typeof window === 'undefined') return;
 
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // スムーズスクロール処理関数
   const scrollToSection = (e, id) => {
     e.preventDefault();
     const element = document.getElementById(id);
     if (element) {
+      // ヘッダーの高さ分（約100px）を引いてスクロール位置を調整
       const headerOffset = 100;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
@@ -75,13 +82,19 @@ const App = () => {
     { name: 'Services', label: 'プラン', id: 'services' },
   ];
 
+  // Background pattern style object
+  const bgPatternStyle = {
+    backgroundImage: `url('https://www.transparenttextures.com/patterns/carbon-fibre.png')`,
+    opacity: 0.1
+  };
+
   return (
     <div className="min-h-screen bg-[#0a0f1a] text-white font-sans selection:bg-amber-200 selection:text-slate-900 overflow-x-hidden leading-relaxed">
       
       {/* Navigation */}
       <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'bg-[#0a0f1a]/95 backdrop-blur-md py-3 shadow-2xl border-b border-white/5' : 'bg-transparent py-6'}`}>
         <div className="max-w-7xl mx-auto px-6 lg:px-12 flex justify-between items-center text-white">
-          <div className="flex items-center gap-4 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          <div className="flex items-center gap-4" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
              <Logo />
              <div className="h-8 w-px bg-white/10 hidden sm:block"></div>
              <span className="hidden sm:block text-[10px] font-black tracking-[0.3em] text-slate-400 uppercase italic leading-none">Gym Judge <span className="text-white font-black">Online</span></span>
@@ -109,7 +122,7 @@ const App = () => {
             </a>
           </div>
 
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden p-2 text-white" aria-label="メニュー">
+          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden p-2 text-white" aria-label="メニューを開く">
             {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
@@ -140,7 +153,7 @@ const App = () => {
           <div className="absolute top-1/4 -left-20 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-[120px] animate-pulse"></div>
           <div className="absolute bottom-1/4 -right-20 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px]"></div>
           {/* Fixed background image handling */}
-          <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:20px_20px] opacity-[0.03]"></div>
+          <div className="absolute inset-0" style={bgPatternStyle}></div>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0a0f1a]/50 to-[#0a0f1a]"></div>
         </div>
 
@@ -237,7 +250,7 @@ const App = () => {
                     私は審判席から多くの演技を見てきましたが、あと少しの意識で防げる減点や、構成の工夫で得られる加点を逃しているケースが非常に多いと感じてきました。
                 </p>
                 <p>
-                    このサービスは、審判の思考を透明化し、選手や指導者の皆様に「正当な評価」を届ける橋渡しをすることを目的に設立しました。
+                    このサービスは、審判の思考を透明化し、選手や指導者の皆様が「正当な評価」を得るための架け橋となることを目的に設立しました。
                 </p>
                 <p className="text-white font-black border-y border-amber-500/20 py-5 inline-block px-12 italic tracking-tight leading-relaxed">
                     理由のない減点は存在しません。
@@ -322,7 +335,7 @@ const App = () => {
                                 <span className="font-bold text-sm text-red-700 leading-none font-black italic leading-none text-left">トカチェフ：姿勢欠陥</span>
                                 <span className="font-black text-amber-600 bg-amber-100 px-3 py-1.5 rounded-lg text-xs leading-none">-0.3</span>
                             </div>
-                            <p className="text-xs text-slate-500 italic leading-[1.8]">前述の腰曲がりにより、姿勢の大きな乱れとして審判は一斉にこのボタンを押し減点されます。</p>
+                            <p className="text-xs text-slate-500 italic leading-[1.8]">前述の腰曲がりは「姿勢の大きな乱れ」とみなされ、審判が一斉に減点する致命的なポイントとなります。</p>
                         </div>
                     </div>
                 </div>
@@ -362,20 +375,18 @@ const App = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Single Plan */}
             <div className="relative group overflow-hidden bg-slate-50 rounded-[60px] p-12 md:p-14 border border-slate-200 hover:shadow-3xl transition-all duration-700 text-left">
+              <div className="absolute top-10 right-10 text-[10px] font-black bg-white border border-slate-200 text-slate-400 px-6 py-2 rounded-full uppercase tracking-widest shadow-sm leading-none">
+                Single Plan
+              </div>
               <div className="relative z-10 flex flex-col h-full">
                 <div className="flex justify-between items-start mb-16 text-slate-900">
                   <div className="p-8 bg-white shadow-xl rounded-[32px] border border-slate-100 group-hover:scale-105 transition-transform duration-500 text-slate-900">
                     <Play className="w-12 h-12 text-blue-600 fill-current" />
                   </div>
-                  {/* === レイアウト修正箇所 === */}
                   <div className="text-right font-sans text-slate-900 flex flex-col items-end">
-                    {/* Badgeを通常配置に変更し、重なりを防止 */}
-                    <div className="text-[10px] font-black bg-white border border-slate-200 text-slate-400 px-5 py-2 rounded-full uppercase tracking-widest shadow-sm leading-none mb-4">
-                        Single Plan
-                    </div>
                     <div className="text-[11px] font-black text-amber-600 uppercase tracking-widest mb-4 italic underline decoration-amber-500/30 underline-offset-8 leading-none">Weekly Limit: 50 Clips</div>
                     <div className="text-6xl font-black tracking-tighter flex items-baseline gap-1 leading-none text-slate-900">
-                      <span className="text-3xl font-bold italic text-slate-900">¥</span>200
+                      <span className="text-3xl font-bold italic text-slate-900">¥</span>250
                     </div>
                   </div>
                 </div>
@@ -417,21 +428,19 @@ const App = () => {
             {/* Premium Pack */}
             <div className="relative group overflow-hidden bg-slate-900 text-white rounded-[60px] p-12 md:p-14 shadow-[0_50px_100px_-30px_rgba(0,0,0,0.6)] transition-all duration-700 border border-slate-800 text-white text-left">
               <div className="absolute inset-0 bg-gradient-to-br from-amber-600/15 to-transparent opacity-60"></div>
+              <div className="absolute top-10 right-10 text-[10px] font-black bg-white/10 border border-white/10 text-white/50 px-6 py-2 rounded-full uppercase tracking-widest shadow-lg leading-none">
+                Full Package
+              </div>
               
               <div className="relative z-10 flex flex-col h-full">
                 <div className="flex justify-between items-start mb-16 text-white">
                   <div className="p-8 bg-amber-500 text-slate-900 shadow-2xl rounded-[32px] animate-pulse group-hover:scale-105 transition-transform duration-500 text-slate-900">
                     <TrendingUp className="w-12 h-12 text-slate-900" />
                   </div>
-                  {/* === レイアウト修正箇所 === */}
                   <div className="text-right font-sans text-white flex flex-col items-end">
-                    {/* Badgeを通常配置に変更し、重なりを防止 */}
-                    <div className="text-[10px] font-black bg-white/10 border border-white/10 text-white/50 px-6 py-2 rounded-full uppercase tracking-widest shadow-lg leading-none mb-4">
-                        Full Package
-                    </div>
                     <div className="text-[12px] font-black text-amber-500 uppercase tracking-widest mb-4 italic underline decoration-amber-500/30 underline-offset-8 leading-none">Weekly Limit: 30 Users</div>
                     <div className="text-6xl font-black tracking-tighter flex items-baseline gap-1 leading-none text-amber-500">
-                      <span className="text-3xl font-bold italic text-amber-500">¥</span>1,000
+                      <span className="text-3xl font-bold italic text-amber-500">¥</span>1,300
                     </div>
                   </div>
                 </div>
@@ -540,7 +549,7 @@ const App = () => {
               <a href="#message" className="hover:text-amber-500 transition-colors uppercase tracking-widest leading-none">Message</a>
               <a href={LINKS.PROFILE} className="hover:text-amber-500 transition-colors uppercase tracking-widest leading-none">Profile</a>
             </div>
-            <div className="text-slate-600 italic leading-none uppercase">© 2026 <span className="text-white font-black italic uppercase tracking-widest text-white">GYM JUDGE ONLINE</span>. All rights reserved. Professional Quality Control.</div>
+            <div className="text-slate-600 italic leading-none uppercase">© 2026 <span className="text-white font-black italic uppercase tracking-widest text-white">GYM JUDGE ONLINE</span>. All rights reserved.</div>
           </div>
         </div>
       </footer>
