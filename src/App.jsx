@@ -13,13 +13,8 @@ const Logo = ({ size = "normal" }) => {
     <div className={`flex items-center gap-3 group cursor-pointer ${isLarge ? "flex-col scale-110 md:scale-125" : ""}`}>
       <div className="relative">
         <div className={`${isLarge ? "w-32 h-32 border-4" : "w-10 h-10 border-2"} border-slate-300 rounded-full flex items-center justify-center relative overflow-hidden bg-slate-900 shadow-xl`}>
-          <div className="absolute inset-0 bg-amber-500/5 blur-sm"></div>
-          {/* Fill style fixed for compatibility */}
-          <Shield 
-            className={`${isLarge ? "w-16 h-16" : "w-5 h-5"} text-amber-500 z-10`} 
-            fill="currentColor" 
-            fillOpacity="0.1" 
-          />
+          <div className="absolute inset-0 bg-amber-500/10 blur-sm"></div>
+          <Shield className={`${isLarge ? "w-16 h-16" : "w-5 h-5"} text-amber-500 z-10`} fill="currentColor" fillOpacity={0.2} />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className={`${isLarge ? "w-4 h-0.5" : "w-1.5 h-px"} bg-amber-500 absolute rotate-90`}></div>
             <div className={`${isLarge ? "w-4 h-0.5" : "w-1.5 h-px"} bg-amber-500 absolute`}></div>
@@ -40,22 +35,20 @@ const App = () => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    // Window check for safety
     if (typeof window === 'undefined') return;
 
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // スムーズスクロール処理関数
   const scrollToSection = (e, id) => {
     e.preventDefault();
     const element = document.getElementById(id);
     if (element) {
-      // ヘッダーの高さ分（約100px）を引いてスクロール位置を調整
       const headerOffset = 100;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
@@ -82,19 +75,13 @@ const App = () => {
     { name: 'Services', label: 'プラン', id: 'services' },
   ];
 
-  // Background pattern style object
-  const bgPatternStyle = {
-    backgroundImage: `url('https://www.transparenttextures.com/patterns/carbon-fibre.png')`,
-    opacity: 0.1
-  };
-
   return (
     <div className="min-h-screen bg-[#0a0f1a] text-white font-sans selection:bg-amber-200 selection:text-slate-900 overflow-x-hidden leading-relaxed">
       
       {/* Navigation */}
       <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'bg-[#0a0f1a]/95 backdrop-blur-md py-3 shadow-2xl border-b border-white/5' : 'bg-transparent py-6'}`}>
         <div className="max-w-7xl mx-auto px-6 lg:px-12 flex justify-between items-center text-white">
-          <div className="flex items-center gap-4" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          <div className="flex items-center gap-4 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
              <Logo />
              <div className="h-8 w-px bg-white/10 hidden sm:block"></div>
              <span className="hidden sm:block text-[10px] font-black tracking-[0.3em] text-slate-400 uppercase italic leading-none">Gym Judge <span className="text-white font-black">Online</span></span>
@@ -122,7 +109,7 @@ const App = () => {
             </a>
           </div>
 
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden p-2 text-white" aria-label="メニューを開く">
+          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden p-2 text-white" aria-label="メニュー">
             {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
@@ -152,8 +139,8 @@ const App = () => {
         <div className="absolute inset-0 z-0">
           <div className="absolute top-1/4 -left-20 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-[120px] animate-pulse"></div>
           <div className="absolute bottom-1/4 -right-20 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px]"></div>
-          {/* Fixed background image handling */}
-          <div className="absolute inset-0" style={bgPatternStyle}></div>
+          {/* CSS Pattern Instead of Image for stability */}
+          <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:20px_20px] opacity-[0.03]"></div>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0a0f1a]/50 to-[#0a0f1a]"></div>
         </div>
 
@@ -165,13 +152,13 @@ const App = () => {
             </div>
             
             <h1 className="text-5xl md:text-8xl font-black mb-12 leading-[1.4] tracking-tighter italic uppercase">
-              あなたの演技を、<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-400 to-amber-100 font-black italic leading-[1.4]">審判の視点</span>で。
+              国際審判員の眼を、<br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-400 to-amber-100 font-black italic leading-[1.4]">あなたの武器</span>に。
             </h1>
             
             <p className="text-lg md:text-2xl text-slate-200 mb-14 max-w-2xl leading-[1.9] font-medium">
-              減点の理由を、細部まで徹底的に解説。<br className="hidden md:block" />
-              現役国際審判員が、あなたの演技を論理的に言語化し、<br className="hidden md:block" />
+              感覚的な指導を卒業しよう。<br className="hidden md:block" />
+              現役審判員があなたの演技を論理的に言語化し、<br className="hidden md:block" />
               確実に点数へと繋げます。
             </p>
 
@@ -250,7 +237,7 @@ const App = () => {
                     私は審判席から多くの演技を見てきましたが、あと少しの意識で防げる減点や、構成の工夫で得られる加点を逃しているケースが非常に多いと感じてきました。
                 </p>
                 <p>
-                    このサービスは、審判の思考を透明化し、選手や指導者の皆様が「正当な評価」を得るための架け橋となることを目的に設立しました。
+                    このサービスは、審判の思考を透明化し、選手や指導者の皆様に「正当な評価」を届ける橋渡しをすることを目的に設立しました。
                 </p>
                 <p className="text-white font-black border-y border-amber-500/20 py-5 inline-block px-12 italic tracking-tight leading-relaxed">
                     理由のない減点は存在しません。
@@ -260,7 +247,7 @@ const App = () => {
                 </p>
             </div>
             <div className="mt-16 inline-block">
-                <div className="text-amber-500 font-black italic tracking-[0.2em] uppercase text-[10px] md:text-xs mb-4 leading-none text-white">Director / International Judge</div>
+                <div className="text-amber-500 font-black italic tracking-[0.2em] uppercase text-[10px] md:text-xs mb-4 leading-none text-white">Director / Official Judge</div>
                 <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-amber-500/50 to-transparent mb-5"></div>
                 <div className="text-2xl md:text-3xl font-black italic tracking-tighter leading-none uppercase text-white">GYM JUDGE ONLINE</div>
             </div>
@@ -335,7 +322,7 @@ const App = () => {
                                 <span className="font-bold text-sm text-red-700 leading-none font-black italic leading-none text-left">トカチェフ：姿勢欠陥</span>
                                 <span className="font-black text-amber-600 bg-amber-100 px-3 py-1.5 rounded-lg text-xs leading-none">-0.3</span>
                             </div>
-                            <p className="text-xs text-slate-500 italic leading-[1.8]">前述の腰曲がりは「姿勢の大きな乱れ」とみなされ、審判が一斉に減点する致命的なポイントとなります。</p>
+                            <p className="text-xs text-slate-500 italic leading-[1.8]">前述の腰曲がりにより、姿勢の大きな乱れとして審判は一斉にこのボタンを押し減点されます。</p>
                         </div>
                     </div>
                 </div>
@@ -384,7 +371,7 @@ const App = () => {
                     <Play className="w-12 h-12 text-blue-600 fill-current" />
                   </div>
                   <div className="text-right font-sans text-slate-900 flex flex-col items-end">
-                    <div className="text-[11px] font-black text-amber-600 uppercase tracking-widest mb-4 italic underline decoration-amber-500/30 underline-offset-8 leading-none">Weekly Limit: 50 Clips</div>
+                    <div className="text-[11px] font-black text-amber-600 uppercase tracking-widest mb-4 italic underline decoration-amber-500/30 underline-offset-8 leading-none">Weekly Limit: 30 Clips</div>
                     <div className="text-6xl font-black tracking-tighter flex items-baseline gap-1 leading-none text-slate-900">
                       <span className="text-3xl font-bold italic text-slate-900">¥</span>250
                     </div>
@@ -400,7 +387,7 @@ const App = () => {
                   <li className="flex items-center gap-6 font-bold text-slate-700">
                       <CheckCircle className="w-9 h-9 text-blue-600 shrink-0 shadow-lg shadow-blue-500/10" />
                       <div className="leading-tight text-left">
-                        週 <span className="text-blue-600 text-2xl font-black font-sans leading-none">50演技</span> 限定受付
+                        週 <span className="text-blue-600 text-2xl font-black font-sans leading-none">30演技</span> 限定受付
                         <span className="block text-[11px] text-slate-400 mt-2 font-medium italic leading-none">※1人で何演技でも申し込み可能</span>
                       </div>
                   </li>
@@ -438,7 +425,7 @@ const App = () => {
                     <TrendingUp className="w-12 h-12 text-slate-900" />
                   </div>
                   <div className="text-right font-sans text-white flex flex-col items-end">
-                    <div className="text-[12px] font-black text-amber-500 uppercase tracking-widest mb-4 italic underline decoration-amber-500/30 underline-offset-8 leading-none">Weekly Limit: 30 Users</div>
+                    <div className="text-[12px] font-black text-amber-500 uppercase tracking-widest mb-4 italic underline decoration-amber-500/30 underline-offset-8 leading-none">Weekly Limit: 20 Users</div>
                     <div className="text-6xl font-black tracking-tighter flex items-baseline gap-1 leading-none text-amber-500">
                       <span className="text-3xl font-bold italic text-amber-500">¥</span>1,300
                     </div>
@@ -454,7 +441,7 @@ const App = () => {
                   <li className="flex items-center gap-6 font-bold leading-none text-left">
                       <CheckCircle className="w-9 h-9 text-amber-500 shrink-0 shadow-lg shadow-amber-500/20 text-amber-500" />
                       <div className="leading-tight text-slate-100 text-left">
-                        週 <span className="text-amber-500 text-2xl font-black font-sans leading-none text-amber-500">30名</span> 限定受付
+                        週 <span className="text-amber-500 text-2xl font-black font-sans leading-none text-amber-500">20名</span> 限定受付
                         <span className="block text-[11px] text-slate-500 mt-2 font-medium italic leading-none">※1人で複数パックの同時申し込みも可能</span>
                       </div>
                   </li>
@@ -549,7 +536,7 @@ const App = () => {
               <a href="#message" className="hover:text-amber-500 transition-colors uppercase tracking-widest leading-none">Message</a>
               <a href={LINKS.PROFILE} className="hover:text-amber-500 transition-colors uppercase tracking-widest leading-none">Profile</a>
             </div>
-            <div className="text-slate-600 italic leading-none uppercase">© 2026 <span className="text-white font-black italic uppercase tracking-widest text-white">GYM JUDGE ONLINE</span>. All rights reserved.</div>
+            <div className="text-slate-600 italic leading-none uppercase">© 2026 <span className="text-white font-black italic uppercase tracking-widest text-white">GYM JUDGE ONLINE</span>. All rights reserved. Professional Quality Control.</div>
           </div>
         </div>
       </footer>
