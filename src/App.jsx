@@ -370,13 +370,13 @@ const App = () => {
                   <div className="p-8 bg-white shadow-xl rounded-[32px] border border-slate-100 group-hover:scale-105 transition-transform duration-500 text-slate-900">
                     <Play className="w-12 h-12 text-blue-600 fill-current" />
                   </div>
-                  {/* Changed layout to prevent overlap - Stacking items */}
-                  <div className="text-right font-sans text-slate-900 flex flex-col items-end">
-                    <div className="text-[10px] font-black bg-white border border-slate-200 text-slate-400 px-4 py-1.5 rounded-full uppercase tracking-widest shadow-sm leading-none mb-3">
+                  {/* Changed layout to prevent overlap - Flexbox with gap */}
+                  <div className="text-right font-sans text-slate-900 flex flex-col items-end gap-3">
+                    <div className="text-[10px] font-black bg-white border border-slate-200 text-slate-400 px-4 py-1.5 rounded-full uppercase tracking-widest shadow-sm leading-none">
                         Single Plan
                     </div>
-                    <div className="text-[11px] font-black text-amber-600 uppercase tracking-widest mb-4 italic underline decoration-amber-500/30 underline-offset-8 leading-none">Weekly Limit: 30 Clips</div>
-                    <div className="text-6xl font-black tracking-tighter flex items-baseline gap-1 leading-none text-slate-900">
+                    <div className="text-[11px] font-black text-amber-600 uppercase tracking-widest italic underline decoration-amber-500/30 underline-offset-8 leading-none">Weekly Limit: 30 Clips</div>
+                    <div className="text-6xl font-black tracking-tighter flex items-baseline gap-1 leading-none text-slate-900 mt-2">
                       <span className="text-3xl font-bold italic text-slate-900">¥</span>250
                     </div>
                   </div>
@@ -425,13 +425,13 @@ const App = () => {
                   <div className="p-8 bg-amber-500 text-slate-900 shadow-2xl rounded-[32px] animate-pulse group-hover:scale-105 transition-transform duration-500 text-slate-900">
                     <TrendingUp className="w-12 h-12 text-slate-900" />
                   </div>
-                  {/* Changed layout to prevent overlap - Stacking items */}
-                  <div className="text-right font-sans text-white flex flex-col items-end">
-                    <div className="text-[10px] font-black bg-white/10 border border-white/10 text-white/50 px-4 py-1.5 rounded-full uppercase tracking-widest shadow-lg leading-none mb-3">
+                  {/* Changed layout to prevent overlap - Flexbox with gap */}
+                  <div className="text-right font-sans text-white flex flex-col items-end gap-3">
+                    <div className="text-[10px] font-black bg-white/10 border border-white/10 text-white/50 px-4 py-1.5 rounded-full uppercase tracking-widest shadow-lg leading-none">
                         Full Package
                     </div>
-                    <div className="text-[12px] font-black text-amber-500 uppercase tracking-widest mb-4 italic underline decoration-amber-500/30 underline-offset-8 leading-none">Weekly Limit: 20 Users</div>
-                    <div className="text-6xl font-black tracking-tighter flex items-baseline gap-1 leading-none text-amber-500">
+                    <div className="text-[12px] font-black text-amber-500 uppercase tracking-widest italic underline decoration-amber-500/30 underline-offset-8 leading-none">Weekly Limit: 20 Users</div>
+                    <div className="text-6xl font-black tracking-tighter flex items-baseline gap-1 leading-none text-amber-500 mt-2">
                       <span className="text-3xl font-bold italic text-amber-500">¥</span>1,300
                     </div>
                   </div>
@@ -470,6 +470,13 @@ const App = () => {
                 </a>
               </div>
             </div>
+          </div>
+          
+          {/* Note added here */}
+          <div className="text-center mt-12">
+            <p className="text-slate-400 font-bold text-sm tracking-widest bg-slate-100/50 inline-block px-6 py-2 rounded-full border border-slate-200">
+               ※随時、週の枠数を増やしていく予定です。
+            </p>
           </div>
         </div>
       </section>
@@ -541,7 +548,7 @@ const App = () => {
               <a href="#message" className="hover:text-amber-500 transition-colors uppercase tracking-widest leading-none">Message</a>
               <a href={LINKS.PROFILE} className="hover:text-amber-500 transition-colors uppercase tracking-widest leading-none">Profile</a>
             </div>
-            <div className="text-slate-600 italic leading-none uppercase">© 2026 <span className="text-white font-black italic uppercase tracking-widest text-white">GYM JUDGE ONLINE</span>. All rights reserved.</div>
+            <div className="text-slate-600 italic leading-none uppercase">© 2026 <span className="text-white font-black italic uppercase tracking-widest text-white">GYM JUDGE ONLINE</span>. All rights reserved. Professional Quality Control.</div>
           </div>
         </div>
       </footer>
