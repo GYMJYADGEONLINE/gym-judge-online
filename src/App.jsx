@@ -152,13 +152,13 @@ const App = () => {
             </div>
             
             <h1 className="text-5xl md:text-8xl font-black mb-12 leading-[1.4] tracking-tighter italic uppercase">
-              国際審判員の眼を、<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-400 to-amber-100 font-black italic leading-[1.4]">あなたの武器</span>に。
+              あなたの演技を、<br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-400 to-amber-100 font-black italic leading-[1.4]">審判の視点</span>で。
             </h1>
             
             <p className="text-lg md:text-2xl text-slate-200 mb-14 max-w-2xl leading-[1.9] font-medium">
-              感覚的な指導を卒業しよう。<br className="hidden md:block" />
-              現役審判員があなたの演技を論理的に言語化し、<br className="hidden md:block" />
+              減点の理由を、細部まで徹底的に解説。<br className="hidden md:block" />
+              現役審判員が、あなたの演技を論理的に言語化し、<br className="hidden md:block" />
               確実に点数へと繋げます。
             </p>
 
@@ -234,7 +234,7 @@ const App = () => {
                     体操競技のルールは年々複雑化しており、選手自身が気づかない「隠れた減点」が多く存在します。
                 </p>
                 <p>
-                    私は審判席から多くの演技を見てきましたが、あと少しの意識で防げる減点や、構成の工夫で得られる加点を逃しているケースが非常に多いと感じてきました。
+                    私は審判席から多くの演技を見てきましたが、あと少しの意識で防げる減点や、構成の工夫で得られる点数を逃しているケースが非常に多いと感じてきました。
                 </p>
                 <p>
                     このサービスは、審判の思考を透明化し、選手や指導者の皆様に「正当な評価」を届ける橋渡しをすることを目的に設立しました。
@@ -322,7 +322,7 @@ const App = () => {
                                 <span className="font-bold text-sm text-red-700 leading-none font-black italic leading-none text-left">トカチェフ：姿勢欠陥</span>
                                 <span className="font-black text-amber-600 bg-amber-100 px-3 py-1.5 rounded-lg text-xs leading-none">-0.3</span>
                             </div>
-                            <p className="text-xs text-slate-500 italic leading-[1.8]">前述の腰曲がりにより、姿勢の大きな乱れとして審判は一斉にこのボタンを押し減点されます。</p>
+                            <p className="text-xs text-slate-500 italic leading-[1.8]">前述の腰曲がりにより、姿勢の大きな乱れとして0.3以上の減点となります。</p>
                         </div>
                     </div>
                 </div>
@@ -370,7 +370,11 @@ const App = () => {
                   <div className="p-8 bg-white shadow-xl rounded-[32px] border border-slate-100 group-hover:scale-105 transition-transform duration-500 text-slate-900">
                     <Play className="w-12 h-12 text-blue-600 fill-current" />
                   </div>
+                  {/* Changed layout to prevent overlap - Stacking items */}
                   <div className="text-right font-sans text-slate-900 flex flex-col items-end">
+                    <div className="text-[10px] font-black bg-white border border-slate-200 text-slate-400 px-4 py-1.5 rounded-full uppercase tracking-widest shadow-sm leading-none mb-3">
+                        Single Plan
+                    </div>
                     <div className="text-[11px] font-black text-amber-600 uppercase tracking-widest mb-4 italic underline decoration-amber-500/30 underline-offset-8 leading-none">Weekly Limit: 30 Clips</div>
                     <div className="text-6xl font-black tracking-tighter flex items-baseline gap-1 leading-none text-slate-900">
                       <span className="text-3xl font-bold italic text-slate-900">¥</span>250
@@ -415,16 +419,17 @@ const App = () => {
             {/* Premium Pack */}
             <div className="relative group overflow-hidden bg-slate-900 text-white rounded-[60px] p-12 md:p-14 shadow-[0_50px_100px_-30px_rgba(0,0,0,0.6)] transition-all duration-700 border border-slate-800 text-white text-left">
               <div className="absolute inset-0 bg-gradient-to-br from-amber-600/15 to-transparent opacity-60"></div>
-              <div className="absolute top-10 right-10 text-[10px] font-black bg-white/10 border border-white/10 text-white/50 px-6 py-2 rounded-full uppercase tracking-widest shadow-lg leading-none">
-                Full Package
-              </div>
               
               <div className="relative z-10 flex flex-col h-full">
                 <div className="flex justify-between items-start mb-16 text-white">
                   <div className="p-8 bg-amber-500 text-slate-900 shadow-2xl rounded-[32px] animate-pulse group-hover:scale-105 transition-transform duration-500 text-slate-900">
                     <TrendingUp className="w-12 h-12 text-slate-900" />
                   </div>
+                  {/* Changed layout to prevent overlap - Stacking items */}
                   <div className="text-right font-sans text-white flex flex-col items-end">
+                    <div className="text-[10px] font-black bg-white/10 border border-white/10 text-white/50 px-4 py-1.5 rounded-full uppercase tracking-widest shadow-lg leading-none mb-3">
+                        Full Package
+                    </div>
                     <div className="text-[12px] font-black text-amber-500 uppercase tracking-widest mb-4 italic underline decoration-amber-500/30 underline-offset-8 leading-none">Weekly Limit: 20 Users</div>
                     <div className="text-6xl font-black tracking-tighter flex items-baseline gap-1 leading-none text-amber-500">
                       <span className="text-3xl font-bold italic text-amber-500">¥</span>1,300
@@ -492,7 +497,7 @@ const App = () => {
                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-16 text-left">
                  {[
                    "全日本選手権 審判実績",
-                   "国際審判員資格 保持",
+                   "1種審判員資格 保持",
                    "インカレ 審判実績",
                    "国民スポーツ大会 審判実績"
                  ].map((item, i) => (
@@ -536,7 +541,7 @@ const App = () => {
               <a href="#message" className="hover:text-amber-500 transition-colors uppercase tracking-widest leading-none">Message</a>
               <a href={LINKS.PROFILE} className="hover:text-amber-500 transition-colors uppercase tracking-widest leading-none">Profile</a>
             </div>
-            <div className="text-slate-600 italic leading-none uppercase">© 2026 <span className="text-white font-black italic uppercase tracking-widest text-white">GYM JUDGE ONLINE</span>. All rights reserved. Professional Quality Control.</div>
+            <div className="text-slate-600 italic leading-none uppercase">© 2026 <span className="text-white font-black italic uppercase tracking-widest text-white">GYM JUDGE ONLINE</span>. All rights reserved.</div>
           </div>
         </div>
       </footer>
