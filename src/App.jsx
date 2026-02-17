@@ -261,7 +261,7 @@ const App = () => {
             <span className="text-amber-500 font-black tracking-[0.5em] text-[10px] md:text-xs uppercase block mb-6 leading-none">Case Study</span>
             <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter leading-[1.35] mb-10 text-white">レポートサンプル</h2>
             <div className="space-y-6">
-                <p className="text-slate-400 font-medium leading-none">実際に納品されるフィードバックシートの構成例です。</p>
+                <p className="text-slate-400 font-medium leading-none">採点レポートに含まれる分析項目のイメージです。</p>
                 <div className="bg-amber-500/10 inline-block px-8 py-3 rounded-full border border-amber-500/30">
                     <p className="text-amber-400 font-bold text-sm leading-tight italic">
                         ※実際に送られてくるフィードバックの構成とは異なります。
@@ -362,17 +362,13 @@ const App = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Single Plan */}
             <div className="relative group overflow-hidden bg-slate-50 rounded-[60px] p-12 md:p-14 border border-slate-200 hover:shadow-3xl transition-all duration-700 text-left">
-              <div className="absolute top-10 right-10 text-[10px] font-black bg-white border border-slate-200 text-slate-400 px-6 py-2 rounded-full uppercase tracking-widest shadow-sm leading-none">
-                Single Plan
-              </div>
               <div className="relative z-10 flex flex-col h-full">
                 <div className="flex justify-between items-start mb-16 text-slate-900">
                   <div className="p-8 bg-white shadow-xl rounded-[32px] border border-slate-100 group-hover:scale-105 transition-transform duration-500 text-slate-900">
                     <Play className="w-12 h-12 text-blue-600 fill-current" />
                   </div>
-                  {/* Changed layout to prevent overlap - Flexbox with gap */}
                   <div className="text-right font-sans text-slate-900 flex flex-col items-end gap-3">
-                    <div className="text-[10px] font-black bg-white border border-slate-200 text-slate-400 px-4 py-1.5 rounded-full uppercase tracking-widest shadow-sm leading-none">
+                    <div className="text-[10px] font-black bg-white border border-slate-200 text-slate-400 px-5 py-2 rounded-full uppercase tracking-widest shadow-sm leading-none">
                         Single Plan
                     </div>
                     <div className="text-[11px] font-black text-amber-600 uppercase tracking-widest italic underline decoration-amber-500/30 underline-offset-8 leading-none">Weekly Limit: 30 Clips</div>
@@ -425,9 +421,8 @@ const App = () => {
                   <div className="p-8 bg-amber-500 text-slate-900 shadow-2xl rounded-[32px] animate-pulse group-hover:scale-105 transition-transform duration-500 text-slate-900">
                     <TrendingUp className="w-12 h-12 text-slate-900" />
                   </div>
-                  {/* Changed layout to prevent overlap - Flexbox with gap */}
                   <div className="text-right font-sans text-white flex flex-col items-end gap-3">
-                    <div className="text-[10px] font-black bg-white/10 border border-white/10 text-white/50 px-4 py-1.5 rounded-full uppercase tracking-widest shadow-lg leading-none">
+                    <div className="text-[10px] font-black bg-white/10 border border-white/10 text-white/50 px-5 py-2 rounded-full uppercase tracking-widest shadow-lg leading-none">
                         Full Package
                     </div>
                     <div className="text-[12px] font-black text-amber-500 uppercase tracking-widest italic underline decoration-amber-500/30 underline-offset-8 leading-none">Weekly Limit: 20 Users</div>
