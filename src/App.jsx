@@ -139,7 +139,6 @@ const App = () => {
         <div className="absolute inset-0 z-0">
           <div className="absolute top-1/4 -left-20 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-[120px] animate-pulse"></div>
           <div className="absolute bottom-1/4 -right-20 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px]"></div>
-          {/* CSS Pattern Instead of Image for stability */}
           <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:20px_20px] opacity-[0.03]"></div>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0a0f1a]/50 to-[#0a0f1a]"></div>
         </div>
@@ -367,13 +366,14 @@ const App = () => {
                   <div className="p-8 bg-white shadow-xl rounded-[32px] border border-slate-100 group-hover:scale-105 transition-transform duration-500 text-slate-900">
                     <Play className="w-12 h-12 text-blue-600 fill-current" />
                   </div>
+                  {/* Changed Layout: ¥300 */}
                   <div className="text-right font-sans text-slate-900 flex flex-col items-end gap-3">
                     <div className="text-[10px] font-black bg-white border border-slate-200 text-slate-400 px-5 py-2 rounded-full uppercase tracking-widest shadow-sm leading-none">
                         Single Plan
                     </div>
                     <div className="text-[11px] font-black text-amber-600 uppercase tracking-widest italic underline decoration-amber-500/30 underline-offset-8 leading-none">Weekly Limit: 30 Clips</div>
                     <div className="text-6xl font-black tracking-tighter flex items-baseline gap-1 leading-none text-slate-900 mt-2">
-                      <span className="text-3xl font-bold italic text-slate-900">¥</span>250
+                      <span className="text-3xl font-bold italic text-slate-900">¥</span>300
                     </div>
                   </div>
                 </div>
@@ -421,13 +421,14 @@ const App = () => {
                   <div className="p-8 bg-amber-500 text-slate-900 shadow-2xl rounded-[32px] animate-pulse group-hover:scale-105 transition-transform duration-500 text-slate-900">
                     <TrendingUp className="w-12 h-12 text-slate-900" />
                   </div>
+                  {/* Changed Layout: ¥1,500 */}
                   <div className="text-right font-sans text-white flex flex-col items-end gap-3">
                     <div className="text-[10px] font-black bg-white/10 border border-white/10 text-white/50 px-5 py-2 rounded-full uppercase tracking-widest shadow-lg leading-none">
                         Full Package
                     </div>
                     <div className="text-[12px] font-black text-amber-500 uppercase tracking-widest italic underline decoration-amber-500/30 underline-offset-8 leading-none">Weekly Limit: 20 Users</div>
                     <div className="text-6xl font-black tracking-tighter flex items-baseline gap-1 leading-none text-amber-500 mt-2">
-                      <span className="text-3xl font-bold italic text-amber-500">¥</span>1,300
+                      <span className="text-3xl font-bold italic text-amber-500">¥</span>1,500
                     </div>
                   </div>
                 </div>
@@ -448,6 +449,13 @@ const App = () => {
                   <li className="flex items-center gap-6 font-bold text-slate-100 leading-none text-left">
                     <CheckCircle className="w-9 h-9 text-amber-500 shrink-0 shadow-lg shadow-amber-500/20 text-amber-500" />
                     <span className="leading-tight text-lg leading-none text-left text-white">全6種目の同時解析・合計算出</span>
+                  </li>
+                  {/* Added "1種目分お得" feature */}
+                  <li className="flex items-center gap-6 font-bold text-slate-100 leading-none text-left">
+                    <CheckCircle className="w-9 h-9 text-amber-500 shrink-0 shadow-lg shadow-amber-500/20 text-amber-500" />
+                    <div className="leading-tight text-lg leading-none text-left text-white">
+                      実質 <span className="text-amber-500 font-black">1種目分（300円）が無料</span> に
+                    </div>
                   </li>
                   <li className="flex items-center gap-6 font-bold text-slate-100 leading-none text-left">
                     <CheckCircle className="w-9 h-9 text-amber-500 shrink-0 shadow-lg shadow-amber-500/20 text-amber-500" />
@@ -496,18 +504,46 @@ const App = () => {
                  審判の「見ているポイント」の理解不足にあります。
                </p>
                
-               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-16 text-left">
-                 {[
-                   "全日本選手権 審判実績",
-                   "1種審判員資格 保持",
-                   "インカレ 審判実績",
-                   "国民スポーツ大会 審判実績"
-                 ].map((item, i) => (
-                   <div key={i} className="flex items-center gap-6 bg-slate-50 p-7 rounded-[30px] border border-slate-100 font-black text-sm uppercase italic leading-none transition-all hover:bg-white hover:shadow-2xl hover:border-amber-200 text-left">
-                     <Award className="text-amber-600 shrink-0 leading-none text-amber-600" size={24} /> 
-                     <span className="text-slate-900 text-left">{item}</span>
+               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-16 text-left">
+                 {/* 保有資格 */}
+                 <div className="bg-slate-50 p-8 rounded-[32px] border border-slate-100 transition-all hover:bg-white hover:shadow-2xl hover:border-amber-200">
+                   <div className="flex items-center gap-4 mb-6">
+                     <div className="p-3 bg-slate-900 text-amber-500 rounded-2xl shadow-lg">
+                       <Award size={24} />
+                     </div>
+                     <h3 className="text-xl font-black italic tracking-tight text-slate-900 uppercase">保有資格</h3>
                    </div>
-                 ))}
+                   <ul className="space-y-4">
+                     <li className="flex items-center gap-3 font-bold text-slate-700">
+                       <CheckCircle className="text-amber-500 w-5 h-5 shrink-0" />
+                       <span>体操競技 1種審判員</span>
+                     </li>
+                   </ul>
+                 </div>
+
+                 {/* 主な審判実績 */}
+                 <div className="bg-slate-50 p-8 rounded-[32px] border border-slate-100 transition-all hover:bg-white hover:shadow-2xl hover:border-amber-200">
+                   <div className="flex items-center gap-4 mb-6">
+                     <div className="p-3 bg-slate-900 text-amber-500 rounded-2xl shadow-lg">
+                       <TrendingUp size={24} />
+                     </div>
+                     <h3 className="text-xl font-black italic tracking-tight text-slate-900 uppercase">主な審判実績</h3>
+                   </div>
+                   <ul className="space-y-4">
+                     <li className="flex items-center gap-3 font-bold text-slate-700">
+                       <CheckCircle className="text-amber-500 w-5 h-5 shrink-0" />
+                       <span>全日本選手権</span>
+                     </li>
+                     <li className="flex items-center gap-3 font-bold text-slate-700">
+                       <CheckCircle className="text-amber-500 w-5 h-5 shrink-0" />
+                       <span>全日本インカレ</span>
+                     </li>
+                     <li className="flex items-center gap-3 font-bold text-slate-700">
+                       <CheckCircle className="text-amber-500 w-5 h-5 shrink-0" />
+                       <span>国民スポーツ大会</span>
+                     </li>
+                   </ul>
+                 </div>
                </div>
 
                <a href={LINKS.PROFILE} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-6 text-slate-900 font-black text-3xl transition-all border-b-8 border-slate-900 pb-4 italic uppercase tracking-tighter hover:text-amber-600 hover:border-amber-600 leading-none text-left">
