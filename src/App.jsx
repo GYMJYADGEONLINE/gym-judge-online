@@ -11,20 +11,43 @@ const Logo = ({ size = "normal" }) => {
   
   return (
     <div className={`flex items-center gap-3 group cursor-pointer ${isLarge ? "flex-col scale-110 md:scale-125" : ""}`}>
-      <div className="relative">
-        <div className={`${isLarge ? "w-32 h-32 border-4" : "w-10 h-10 border-2"} border-slate-300 rounded-full flex items-center justify-center relative overflow-hidden bg-slate-900 shadow-xl`}>
-          <div className="absolute inset-0 bg-amber-500/10 blur-sm"></div>
-          <Shield className={`${isLarge ? "w-16 h-16" : "w-5 h-5"} text-amber-500 z-10`} fill="currentColor" fillOpacity={0.2} />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className={`${isLarge ? "w-4 h-0.5" : "w-1.5 h-px"} bg-amber-500 absolute rotate-90`}></div>
-            <div className={`${isLarge ? "w-4 h-0.5" : "w-1.5 h-px"} bg-amber-500 absolute`}></div>
+      {/* アイコンエンブレム部分 */}
+      <div className="relative flex items-center justify-center">
+        {/* 外側の回転する目盛り（精密さを表現） */}
+        <div className={`absolute inset-0 border border-amber-500/30 rounded-full border-dashed animate-[spin_15s_linear_infinite] ${isLarge ? "scale-[1.15]" : "scale-[1.2]"}`}></div>
+        <div className={`absolute inset-0 border border-amber-500/10 rounded-full animate-[spin_20s_linear_infinite_reverse] ${isLarge ? "scale-[1.3]" : "scale-[1.4]"}`}></div>
+        
+        {/* メインシールド */}
+        <div className={`${isLarge ? "w-32 h-32 border-[3px]" : "w-10 h-10 border-2"} border-amber-500/40 rounded-full flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-slate-800 to-slate-950 shadow-[0_0_15px_rgba(245,158,11,0.2)] group-hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] group-hover:border-amber-400 transition-all duration-500`}>
+          
+          {/* 内側の発光エフェクト */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(245,158,11,0.2),transparent_50%)]"></div>
+          
+          <Shield className={`${isLarge ? "w-14 h-14" : "w-4 h-4"} text-amber-400 z-10 group-hover:scale-110 transition-transform duration-500`} fill="currentColor" fillOpacity={0.1} strokeWidth={1.5} />
+          
+          {/* クロスヘア（照準）の意匠 */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className={`${isLarge ? "w-1.5 h-1.5" : "w-0.5 h-0.5"} bg-amber-300 rounded-full absolute z-20`}></div>
+            <div className={`${isLarge ? "w-24" : "w-6"} h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent absolute z-10`}></div>
+            <div className={`${isLarge ? "h-24" : "h-6"} w-px bg-gradient-to-b from-transparent via-amber-500/50 to-transparent absolute z-10`}></div>
           </div>
         </div>
       </div>
-      <div className={`flex flex-col ${isLarge ? "items-center mt-6" : "items-start"}`}>
-        <span className={`font-serif tracking-[0.1em] leading-none text-white ${isLarge ? "text-5xl" : "text-xl"} uppercase`}>Judge</span>
-        <div className={`h-px bg-amber-500 my-1 ${isLarge ? "w-24" : "w-8"}`}></div>
-        <span className={`font-sans font-black tracking-[0.2em] text-amber-500 uppercase ${isLarge ? "text-[10px]" : "text-[8px]"}`}>Professional</span>
+
+      {/* テキスト部分 */}
+      <div className={`flex flex-col ${isLarge ? "items-center mt-8" : "items-start"}`}>
+        <div className="flex items-baseline gap-1">
+          <span className={`font-serif tracking-[0.15em] leading-none text-white ${isLarge ? "text-5xl" : "text-xl"} uppercase drop-shadow-md`}>Judge</span>
+        </div>
+        
+        {/* 装飾的なアンダーライン */}
+        <div className={`flex items-center gap-1.5 my-1.5 ${isLarge ? "w-36" : "w-14"}`}>
+          <div className="h-px bg-gradient-to-r from-transparent via-amber-500 to-transparent flex-grow"></div>
+          <div className={`${isLarge ? "w-1.5 h-1.5" : "w-[3px] h-[3px]"} rotate-45 bg-amber-500`}></div>
+          <div className="h-px bg-gradient-to-r from-amber-500 via-amber-500 to-transparent flex-grow"></div>
+        </div>
+        
+        <span className={`font-sans font-black tracking-[0.3em] text-amber-500/90 uppercase ${isLarge ? "text-[11px]" : "text-[6px]"}`}>Professional</span>
       </div>
     </div>
   );
@@ -361,12 +384,14 @@ const App = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Single Plan */}
             <div className="relative group overflow-hidden bg-slate-50 rounded-[60px] p-12 md:p-14 border border-slate-200 hover:shadow-3xl transition-all duration-700 text-left">
+              <div className="absolute top-10 right-10 text-[10px] font-black bg-white border border-slate-200 text-slate-400 px-6 py-2 rounded-full uppercase tracking-widest shadow-sm leading-none hidden">
+                Single Plan
+              </div>
               <div className="relative z-10 flex flex-col h-full">
                 <div className="flex justify-between items-start mb-16 text-slate-900">
                   <div className="p-8 bg-white shadow-xl rounded-[32px] border border-slate-100 group-hover:scale-105 transition-transform duration-500 text-slate-900">
                     <Play className="w-12 h-12 text-blue-600 fill-current" />
                   </div>
-                  {/* Changed Layout: ¥300 */}
                   <div className="text-right font-sans text-slate-900 flex flex-col items-end gap-3">
                     <div className="text-[10px] font-black bg-white border border-slate-200 text-slate-400 px-5 py-2 rounded-full uppercase tracking-widest shadow-sm leading-none">
                         Single Plan
@@ -415,13 +440,15 @@ const App = () => {
             {/* Premium Pack */}
             <div className="relative group overflow-hidden bg-slate-900 text-white rounded-[60px] p-12 md:p-14 shadow-[0_50px_100px_-30px_rgba(0,0,0,0.6)] transition-all duration-700 border border-slate-800 text-white text-left">
               <div className="absolute inset-0 bg-gradient-to-br from-amber-600/15 to-transparent opacity-60"></div>
+              <div className="absolute top-10 right-10 text-[10px] font-black bg-white/10 border border-white/10 text-white/50 px-6 py-2 rounded-full uppercase tracking-widest shadow-lg leading-none hidden">
+                Full Package
+              </div>
               
               <div className="relative z-10 flex flex-col h-full">
                 <div className="flex justify-between items-start mb-16 text-white">
                   <div className="p-8 bg-amber-500 text-slate-900 shadow-2xl rounded-[32px] animate-pulse group-hover:scale-105 transition-transform duration-500 text-slate-900">
                     <TrendingUp className="w-12 h-12 text-slate-900" />
                   </div>
-                  {/* Changed Layout: ¥1,500 */}
                   <div className="text-right font-sans text-white flex flex-col items-end gap-3">
                     <div className="text-[10px] font-black bg-white/10 border border-white/10 text-white/50 px-5 py-2 rounded-full uppercase tracking-widest shadow-lg leading-none">
                         Full Package
@@ -450,7 +477,6 @@ const App = () => {
                     <CheckCircle className="w-9 h-9 text-amber-500 shrink-0 shadow-lg shadow-amber-500/20 text-amber-500" />
                     <span className="leading-tight text-lg leading-none text-left text-white">全6種目の同時解析・合計算出</span>
                   </li>
-                  {/* Added "1種目分お得" feature */}
                   <li className="flex items-center gap-6 font-bold text-slate-100 leading-none text-left">
                     <CheckCircle className="w-9 h-9 text-amber-500 shrink-0 shadow-lg shadow-amber-500/20 text-amber-500" />
                     <div className="leading-tight text-lg leading-none text-left text-white">
@@ -475,7 +501,6 @@ const App = () => {
             </div>
           </div>
           
-          {/* Note added here */}
           <div className="text-center mt-12">
             <p className="text-slate-400 font-bold text-sm tracking-widest bg-slate-100/50 inline-block px-6 py-2 rounded-full border border-slate-200">
                ※随時、週の枠数を増やしていく予定です。
