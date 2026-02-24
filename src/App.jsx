@@ -390,61 +390,8 @@ const App = () => {
         </div>
       </section>
 
-      {/* --- How It Works (ご利用の流れ) --- */}
-      <section className="py-24 bg-slate-50 rounded-t-[60px] lg:rounded-t-[100px] shadow-[0_-20px_100px_rgba(0,0,0,0.7)] relative z-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 text-slate-900">
-          <div className="text-center mb-20">
-            <span className="text-amber-600 font-black tracking-[0.5em] text-[10px] md:text-xs uppercase block mb-4 leading-none">How It Works</span>
-            <h2 className="text-4xl md:text-5xl font-black italic uppercase tracking-tighter leading-[1.35] text-slate-900">ご利用の流れ</h2>
-            <p className="mt-4 text-slate-500 font-medium">スマホひとつで、動画撮影からレポート受け取りまで完結します。</p>
-          </div>
-
-          <div className="relative">
-            <div className="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-200 to-transparent -translate-y-1/2 z-0"></div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
-              {/* Step 1 */}
-              <div className="bg-white p-10 rounded-[40px] shadow-xl border border-slate-100 flex flex-col items-center text-center relative hover:-translate-y-2 transition-transform duration-300">
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white font-black px-6 py-2 rounded-full text-sm italic tracking-widest border-4 border-slate-50">STEP 1</div>
-                <div className="w-20 h-20 bg-blue-50 text-blue-600 rounded-3xl flex items-center justify-center mb-8 mt-4 shadow-inner">
-                  <Smartphone size={40} />
-                </div>
-                <h3 className="text-2xl font-black text-slate-900 mb-4">スマホで撮影</h3>
-                <p className="text-slate-500 font-medium leading-relaxed">
-                  いつもの練習風景や大会の演技をスマートフォン等で撮影します。特別な機材は不要です。
-                </p>
-              </div>
-
-              {/* Step 2 */}
-              <div className="bg-white p-10 rounded-[40px] shadow-xl border border-slate-100 flex flex-col items-center text-center relative hover:-translate-y-2 transition-transform duration-300">
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white font-black px-6 py-2 rounded-full text-sm italic tracking-widest border-4 border-slate-50">STEP 2</div>
-                <div className="w-20 h-20 bg-amber-50 text-amber-600 rounded-3xl flex items-center justify-center mb-8 mt-4 shadow-inner">
-                  <Upload size={40} />
-                </div>
-                <h3 className="text-2xl font-black text-slate-900 mb-4">オンラインで送信</h3>
-                <p className="text-slate-500 font-medium leading-relaxed">
-                  動画を<a href="https://gigafile.nu/" target="_blank" rel="noopener noreferrer" className="text-blue-600 font-bold underline hover:text-blue-800 transition-colors">ギガファイル便</a>でURL化し、MOSHの専用ページからお申し込み時にお送りください。
-                </p>
-              </div>
-
-              {/* Step 3 */}
-              <div className="bg-white p-10 rounded-[40px] shadow-xl border border-slate-100 flex flex-col items-center text-center relative hover:-translate-y-2 transition-transform duration-300">
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-amber-500 text-slate-900 font-black px-6 py-2 rounded-full text-sm italic tracking-widest border-4 border-slate-50">STEP 3</div>
-                <div className="w-20 h-20 bg-emerald-50 text-emerald-600 rounded-3xl flex items-center justify-center mb-8 mt-4 shadow-inner">
-                  <FileCheck size={40} />
-                </div>
-                <h3 className="text-2xl font-black text-slate-900 mb-4">レポートのお届け</h3>
-                <p className="text-slate-500 font-medium leading-relaxed">
-                  数日以内に、Dスコア・Eスコアの詳細な分析と改善アドバイスをまとめたPDFレポートをお届けします。
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Services Section */}
-      <section id="services" className="py-32 bg-white text-slate-900 relative z-20 border-t border-slate-200">
+      <section id="services" className="py-32 bg-slate-50 text-slate-900 rounded-t-[60px] lg:rounded-t-[100px] shadow-[0_-20px_100px_rgba(0,0,0,0.7)] relative z-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 text-slate-900">
           <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-12 text-left">
             <div className="max-w-2xl">
@@ -465,14 +412,14 @@ const App = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Single Plan */}
-            <div className="relative group overflow-hidden bg-slate-50 rounded-[60px] p-12 md:p-14 border border-slate-200 hover:shadow-3xl transition-all duration-700 text-left flex flex-col">
+            <div className="relative group overflow-hidden bg-white rounded-[60px] p-12 md:p-14 border border-slate-100 shadow-xl hover:shadow-2xl transition-all duration-700 text-left flex flex-col">
               <div className="relative z-10 flex flex-col h-full">
                 <div className="flex justify-between items-start mb-16 text-slate-900">
-                  <div className="p-8 bg-white shadow-xl rounded-[32px] border border-slate-100 group-hover:scale-105 transition-transform duration-500 text-slate-900">
+                  <div className="p-8 bg-slate-50 shadow-inner rounded-[32px] border border-slate-100 group-hover:scale-105 transition-transform duration-500 text-slate-900">
                     <Play className="w-12 h-12 text-blue-600 fill-current" />
                   </div>
                   <div className="text-right font-sans text-slate-900 flex flex-col items-end gap-3">
-                    <div className="text-[10px] font-black bg-white border border-slate-200 text-slate-400 px-5 py-2 rounded-full uppercase tracking-widest shadow-sm leading-none">
+                    <div className="text-[10px] font-black bg-slate-50 border border-slate-200 text-slate-400 px-5 py-2 rounded-full uppercase tracking-widest shadow-sm leading-none">
                         Single Plan
                     </div>
                     <div className="text-[11px] font-black text-amber-600 uppercase tracking-widest italic underline decoration-amber-500/30 underline-offset-8 leading-none">Weekly Limit: 30 Clips</div>
@@ -569,10 +516,63 @@ const App = () => {
                   href={LINKS.PACK}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full bg-amber-500 text-slate-900 py-8 rounded-[30px] font-black text-2xl flex items-center justify-center gap-4 transition-all hover:scale-[1.03] shadow-[0_0_60px_rgba(245,158,11,0.5)] italic uppercase tracking-tighter"
+                  className="w-full mt-auto bg-amber-500 text-slate-900 py-8 rounded-[30px] font-black text-2xl flex items-center justify-center gap-4 transition-all hover:scale-[1.03] shadow-[0_0_60px_rgba(245,158,11,0.5)] italic uppercase tracking-tighter"
                 >
                   Request Full <ExternalLink size={24} />
                 </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* --- How It Works (ご利用の流れ) --- */}
+      <section className="py-24 bg-slate-100 relative border-t border-slate-200">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 text-slate-900">
+          <div className="text-center mb-20">
+            <span className="text-amber-600 font-black tracking-[0.5em] text-[10px] md:text-xs uppercase block mb-4 leading-none">How It Works</span>
+            <h2 className="text-4xl md:text-5xl font-black italic uppercase tracking-tighter leading-[1.35] text-slate-900">ご利用の流れ</h2>
+            <p className="mt-4 text-slate-500 font-medium">スマホひとつで、動画撮影からレポート受け取りまで完結します。</p>
+          </div>
+
+          <div className="relative">
+            <div className="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent -translate-y-1/2 z-0"></div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
+              {/* Step 1 */}
+              <div className="bg-white p-10 rounded-[40px] shadow-xl border border-slate-50 flex flex-col items-center text-center relative hover:-translate-y-2 transition-transform duration-300">
+                <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white font-black px-6 py-2 rounded-full text-sm italic tracking-widest border-4 border-slate-100">STEP 1</div>
+                <div className="w-20 h-20 bg-blue-50 text-blue-600 rounded-3xl flex items-center justify-center mb-8 mt-4 shadow-inner">
+                  <Smartphone size={40} />
+                </div>
+                <h3 className="text-2xl font-black text-slate-900 mb-4">スマホで撮影</h3>
+                <p className="text-slate-500 font-medium leading-relaxed">
+                  いつもの練習風景や大会の演技をスマートフォン等で撮影します。特別な機材は不要です。
+                </p>
+              </div>
+
+              {/* Step 2 */}
+              <div className="bg-white p-10 rounded-[40px] shadow-xl border border-slate-50 flex flex-col items-center text-center relative hover:-translate-y-2 transition-transform duration-300">
+                <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white font-black px-6 py-2 rounded-full text-sm italic tracking-widest border-4 border-slate-100">STEP 2</div>
+                <div className="w-20 h-20 bg-amber-50 text-amber-600 rounded-3xl flex items-center justify-center mb-8 mt-4 shadow-inner">
+                  <Upload size={40} />
+                </div>
+                <h3 className="text-2xl font-black text-slate-900 mb-4">オンラインで送信</h3>
+                <p className="text-slate-500 font-medium leading-relaxed">
+                  動画を<a href="https://gigafile.nu/" target="_blank" rel="noopener noreferrer" className="text-blue-600 font-bold underline hover:text-blue-800 transition-colors">ギガファイル便</a>でURL化し、MOSHの専用ページからお申し込み時にお送りください。
+                </p>
+              </div>
+
+              {/* Step 3 */}
+              <div className="bg-white p-10 rounded-[40px] shadow-xl border border-slate-50 flex flex-col items-center text-center relative hover:-translate-y-2 transition-transform duration-300">
+                <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-amber-500 text-slate-900 font-black px-6 py-2 rounded-full text-sm italic tracking-widest border-4 border-slate-100">STEP 3</div>
+                <div className="w-20 h-20 bg-emerald-50 text-emerald-600 rounded-3xl flex items-center justify-center mb-8 mt-4 shadow-inner">
+                  <FileCheck size={40} />
+                </div>
+                <h3 className="text-2xl font-black text-slate-900 mb-4">レポートのお届け</h3>
+                <p className="text-slate-500 font-medium leading-relaxed">
+                  数日以内に、Dスコア・Eスコアの詳細な分析と改善アドバイスをまとめたPDFレポートをお届けします。
+                </p>
               </div>
             </div>
           </div>
@@ -612,7 +612,7 @@ const App = () => {
                 a: "1回の依頼につき「1演技（通し、または特定の技）」の分析となります。複数の演技の分析をご希望の場合は、演技の数だけプランをご購入いただくか、フルパックをご利用ください。"
               }
             ].map((faq, index) => (
-              <div key={index} className="bg-slate-50 rounded-3xl p-8 border border-slate-100 hover:border-amber-200 transition-colors">
+              <div key={index} className="bg-white rounded-3xl p-8 shadow-lg border border-slate-100 hover:shadow-xl hover:border-amber-200 transition-all duration-300">
                 <h4 className="text-xl font-black text-slate-900 mb-4 flex gap-4">
                   <span className="text-amber-500 font-serif italic">Q.</span>
                   {faq.q}
@@ -649,7 +649,7 @@ const App = () => {
                
                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-16 text-left">
                  {/* 保有資格 */}
-                 <div className="bg-slate-50 p-8 rounded-[32px] border border-slate-100 transition-all hover:bg-white hover:shadow-2xl hover:border-amber-200">
+                 <div className="bg-white p-8 rounded-[32px] border border-slate-100 shadow-xl transition-all hover:-translate-y-1 hover:shadow-2xl hover:border-amber-200">
                    <div className="flex items-center gap-4 mb-6">
                      <div className="p-3 bg-slate-900 text-amber-500 rounded-2xl shadow-lg">
                        <Award size={24} />
@@ -665,7 +665,7 @@ const App = () => {
                  </div>
 
                  {/* 主な審判実績 */}
-                 <div className="bg-slate-50 p-8 rounded-[32px] border border-slate-100 transition-all hover:bg-white hover:shadow-2xl hover:border-amber-200">
+                 <div className="bg-white p-8 rounded-[32px] border border-slate-100 shadow-xl transition-all hover:-translate-y-1 hover:shadow-2xl hover:border-amber-200">
                    <div className="flex items-center gap-4 mb-6">
                      <div className="p-3 bg-slate-900 text-amber-500 rounded-2xl shadow-lg">
                        <TrendingUp size={24} />
