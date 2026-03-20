@@ -15,9 +15,9 @@ const Logo = ({ size = "normal", theme = "dark" }) => {
     <div className={`flex items-center gap-3 group cursor-pointer ${isLarge ? "flex-col scale-110 md:scale-125" : ""}`}>
       {/* アイコンエンブレム部分 */}
       <div className="relative flex items-center justify-center">
-        {/* 外側の回転する目盛り（精密さを表現） */}
-        <div className={`absolute inset-0 border border-amber-500/30 rounded-full border-dashed animate-[spin_15s_linear_infinite] ${isLarge ? "scale-[1.15]" : "scale-[1.2]"}`}></div>
-        <div className={`absolute inset-0 border border-amber-500/10 rounded-full animate-[spin_20s_linear_infinite_reverse] ${isLarge ? "scale-[1.3]" : "scale-[1.4]"}`}></div>
+        {/* 外側の回転する目盛り（スマホではアニメーション停止で軽量化） */}
+        <div className={`absolute inset-0 border border-amber-500/30 rounded-full border-dashed md:animate-[spin_15s_linear_infinite] ${isLarge ? "scale-[1.15]" : "scale-[1.2]"}`}></div>
+        <div className={`absolute inset-0 border border-amber-500/10 rounded-full md:animate-[spin_20s_linear_infinite_reverse] ${isLarge ? "scale-[1.3]" : "scale-[1.4]"}`}></div>
         
         {/* メインシールド */}
         <div className={`${isLarge ? "w-32 h-32 border-[3px]" : "w-10 h-10 border-2"} border-amber-500/40 rounded-full flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-slate-800 to-slate-950 shadow-[0_0_15px_rgba(245,158,11,0.2)] group-hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] group-hover:border-amber-400 transition-all duration-500`}>
@@ -93,7 +93,7 @@ const App = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0a0f1a] text-white font-sans selection:bg-amber-200 selection:text-slate-900 overflow-x-hidden leading-relaxed">
+    <div className="min-h-[100dvh] bg-[#0a0f1a] text-white font-sans selection:bg-amber-200 selection:text-slate-900 overflow-x-hidden leading-relaxed relative w-full">
       
       {/* Navigation */}
       <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'bg-[#0a0f1a]/95 backdrop-blur-md py-3 shadow-2xl border-b border-white/5' : 'bg-transparent py-6'}`}>
@@ -126,7 +126,7 @@ const App = () => {
             </a>
           </div>
 
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden p-2 text-white">
+          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden p-2 text-white" aria-label="メニュー">
             {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
@@ -139,7 +139,7 @@ const App = () => {
                 key={item.name} 
                 href={`#${item.id}`} 
                 className="block text-xl font-bold text-slate-300" 
-                onClick={(e) => scrollToSection(e, item.id)}
+                onClick={(e) => { scrollToSection(e, item.id); setIsMenuOpen(false); }}
               >
                 {item.label}
               </a>
@@ -152,11 +152,13 @@ const App = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center pt-24 pb-20 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/4 -left-20 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-[120px] animate-pulse"></div>
-          <div className="absolute bottom-1/4 -right-20 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:20px_20px] opacity-[0.03]"></div>
+      <section className="relative min-h-[100dvh] flex items-center pt-24 pb-20 overflow-hidden w-full">
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          {/* 描画負荷の高いBlurエフェクトと点滅をスマホでは制限 */}
+          <div className="absolute top-1/4 -left-10 md:-left-20 w-48 h-48 md:w-[600px] md:h-[600px] bg-amber-500/10 rounded-full blur-2xl md:blur-[120px] md:animate-pulse"></div>
+          <div className="absolute bottom-1/4 -right-10 md:-right-20 w-48 h-48 md:w-[500px] md:h-[500px] bg-blue-600/10 rounded-full blur-2xl md:blur-[120px]"></div>
+          {/* 負荷の高い網目模様の背景はスマホで非表示 */}
+          <div className="hidden md:block absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:20px_20px] opacity-[0.03]"></div>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0a0f1a]/50 to-[#0a0f1a]"></div>
         </div>
 
@@ -167,29 +169,29 @@ const App = () => {
               <div className="h-px flex-grow bg-gradient-to-r from-amber-500 to-transparent"></div>
             </div>
             
-            <h1 className="text-5xl md:text-8xl font-black mb-12 leading-[1.4] tracking-tighter italic uppercase">
+            <h1 className="text-4xl sm:text-5xl md:text-8xl font-black mb-10 md:mb-12 leading-[1.4] tracking-tighter italic uppercase">
               あなたの演技を、<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-400 to-amber-100 font-black italic leading-[1.4]">審判の視点</span>で。
             </h1>
             
-            <p className="text-lg md:text-2xl text-slate-200 mb-14 max-w-2xl leading-[1.9] font-medium">
-              減点の理由を、細部まで徹底的に解説。<br className="hidden md:block" />
-              現役審判員が、あなたの演技を論理的に言語化し、<br className="hidden md:block" />
+            <p className="text-base sm:text-lg md:text-2xl text-slate-200 mb-10 md:mb-14 max-w-2xl leading-[1.9] font-medium">
+              減点の理由を、細部まで徹底的に解説。<br className="hidden sm:block" />
+              現役審判員が、あなたの演技を論理的に言語化し、<br className="hidden sm:block" />
               確実に点数へと繋げます。
             </p>
 
-            <div className="flex flex-wrap gap-6">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-4 sm:gap-6">
               <a 
                 href="#services" 
                 onClick={(e) => scrollToSection(e, 'services')}
-                className="group relative px-10 py-5 bg-amber-500 text-slate-900 font-black rounded-2xl transition-all shadow-2xl shadow-amber-500/20 flex items-center gap-3 text-xl uppercase italic tracking-tighter cursor-pointer"
+                className="group relative px-8 sm:px-10 py-4 sm:py-5 bg-amber-500 text-slate-900 font-black rounded-2xl transition-all shadow-xl md:shadow-2xl shadow-amber-500/20 flex items-center justify-center sm:justify-start gap-3 text-lg sm:text-xl uppercase italic tracking-tighter cursor-pointer"
               >
                 依頼メニュー <ChevronRight size={24} />
               </a>
               <a 
                 href="#sample" 
                 onClick={(e) => scrollToSection(e, 'sample')}
-                className="px-10 py-5 bg-white/5 border border-white/10 hover:bg-white/10 backdrop-blur-sm text-white font-black rounded-2xl transition-all text-xl uppercase italic tracking-tighter cursor-pointer"
+                className="px-8 sm:px-10 py-4 sm:py-5 bg-white/5 border border-white/10 hover:bg-white/10 backdrop-blur-sm text-white font-black rounded-2xl transition-all text-lg sm:text-xl text-center uppercase italic tracking-tighter cursor-pointer"
               >
                 レポート事例
               </a>
@@ -199,7 +201,7 @@ const App = () => {
       </section>
 
       {/* --- Pain Points (お悩み共感) --- */}
-      <section className="py-20 relative bg-[#0a0f1a] border-y border-white/5">
+      <section className="py-20 relative bg-[#0a0f1a] border-y border-white/5 w-full">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="text-center mb-16">
             <span className="text-amber-500 font-black tracking-[0.5em] text-[10px] md:text-xs uppercase block mb-4 leading-none">Pain Points</span>
@@ -234,7 +236,7 @@ const App = () => {
       </section>
 
       {/* Philosophy Section */}
-      <section id="philosophy" className="py-28 relative bg-[#0a0f1a] text-white">
+      <section id="philosophy" className="py-28 relative bg-[#0a0f1a] text-white w-full">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {[
@@ -257,15 +259,15 @@ const App = () => {
                 desc: "ただ採点するだけでなく、点数を最大化するための「見せ方」や「構成案」を具体的に提案します。" 
               }
             ].map((item, i) => (
-              <div key={i} className="group p-10 bg-white/5 border border-white/10 rounded-[40px] hover:bg-white/10 transition-all duration-500">
+              <div key={i} className="group p-8 md:p-10 bg-white/5 border border-white/10 rounded-[40px] hover:bg-white/10 transition-all duration-500">
                 <div className="mb-8 p-4 bg-[#0a0f1a] rounded-2xl inline-block border border-white/5 shadow-xl group-hover:border-amber-500/30 transition-colors text-white">
                   {item.icon}
                 </div>
                 <div className="mb-6">
                   <span className="text-[10px] font-black text-amber-500/50 uppercase tracking-[0.3em] block mb-2 leading-none">{item.eng}</span>
-                  <h3 className="text-2xl font-black tracking-tight uppercase italic leading-[1.45]">{item.title}</h3>
+                  <h3 className="text-xl md:text-2xl font-black tracking-tight uppercase italic leading-[1.45]">{item.title}</h3>
                 </div>
-                <p className="text-slate-400 leading-[1.9] font-medium">{item.desc}</p>
+                <p className="text-slate-400 leading-[1.9] font-medium text-sm md:text-base">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -273,14 +275,14 @@ const App = () => {
       </section>
 
       {/* Greeting Section */}
-      <section id="message" className="py-28 relative bg-[#0a0f1a] overflow-hidden border-t border-white/5">
+      <section id="message" className="py-28 relative bg-[#0a0f1a] overflow-hidden border-t border-white/5 w-full">
         <div className="max-w-4xl mx-auto px-6 lg:px-12 relative z-10 text-center text-white">
             <Quote className="w-12 h-12 text-amber-500/20 mx-auto mb-10" />
             <h2 className="text-2xl md:text-4xl font-black mb-12 italic leading-[1.8]">
                 「なぜ」を「納得」へ変え、<br />
                 選手の努力を正当なスコアへ繋ぐ。
             </h2>
-            <div className="space-y-8 text-slate-300 text-lg md:text-xl leading-[2.2] font-medium max-w-3xl mx-auto">
+            <div className="space-y-8 text-slate-300 text-base md:text-xl leading-[2.2] font-medium max-w-3xl mx-auto">
                 <p>
                     体操競技のルールは年々複雑化しており、選手自身が気づかない「隠れた減点」が多く存在します。
                 </p>
@@ -290,7 +292,7 @@ const App = () => {
                 <p>
                     このサービスは、審判の思考を透明化し、選手や指導者の皆様に「正当な評価」を届ける橋渡しをすることを目的に設立しました。
                 </p>
-                <p className="text-white font-black border-y border-amber-500/20 py-5 inline-block px-12 italic tracking-tight leading-relaxed">
+                <p className="text-white font-black border-y border-amber-500/20 py-5 inline-block px-4 sm:px-12 italic tracking-tight leading-relaxed">
                     理由のない減点は存在しません。
                 </p>
                 <p>
@@ -306,82 +308,82 @@ const App = () => {
       </section>
 
       {/* Sample Feedback Section */}
-      <section id="sample" className="py-32 relative bg-slate-900 border-y border-white/5 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 text-white">
-          <div className="text-center mb-24">
+      <section id="sample" className="py-20 md:py-32 relative bg-slate-900 border-y border-white/5 overflow-hidden w-full">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 text-white">
+          <div className="text-center mb-16 md:mb-24">
             <span className="text-amber-500 font-black tracking-[0.5em] text-[10px] md:text-xs uppercase block mb-6 leading-none">Case Study</span>
-            <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter leading-[1.35] mb-10 text-white">レポートサンプル</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-6xl font-black italic uppercase tracking-tighter leading-[1.35] mb-8 md:mb-10 text-white">レポートサンプル</h2>
             <div className="space-y-6">
-                <p className="text-slate-400 font-medium leading-none">採点レポートに含まれる分析項目のイメージです。</p>
-                <div className="bg-amber-500/10 inline-block px-8 py-3 rounded-full border border-amber-500/30">
-                    <p className="text-amber-400 font-bold text-sm leading-tight italic">
+                <p className="text-slate-400 font-medium leading-none text-sm md:text-base">採点レポートに含まれる分析項目のイメージです。</p>
+                <div className="bg-amber-500/10 inline-block px-4 sm:px-8 py-3 rounded-full border border-amber-500/30">
+                    <p className="text-amber-400 font-bold text-xs md:text-sm leading-tight italic">
                         ※実際に送られてくるフィードバックの構成とは異なります。
                     </p>
                 </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-[50px] overflow-hidden shadow-2xl text-slate-900 max-w-4xl mx-auto border-[10px] border-slate-800 relative z-10">
-            <div className="bg-slate-100 p-8 border-b border-slate-200 flex flex-col md:flex-row justify-between items-center gap-6">
-                <div className="flex items-center gap-4 text-slate-900">
-                    <div className="p-3 bg-slate-900 text-amber-500 rounded-2xl shadow-lg"><Award /></div>
-                    <div>
-                        <span className="text-[10px] font-black uppercase text-slate-400 block tracking-widest mb-2 leading-none">Category</span>
-                        <span className="text-xl font-black italic leading-none uppercase">男子 鉄棒 / Horizontal Bar</span>
+          <div className="bg-white rounded-[32px] md:rounded-[50px] overflow-hidden shadow-2xl text-slate-900 max-w-4xl mx-auto border-[4px] md:border-[10px] border-slate-800 relative z-10 w-full">
+            <div className="bg-slate-100 p-6 md:p-8 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-6">
+                <div className="flex items-center gap-4 text-slate-900 w-full sm:w-auto">
+                    <div className="p-3 bg-slate-900 text-amber-500 rounded-2xl shadow-lg shrink-0"><Award /></div>
+                    <div className="overflow-hidden">
+                        <span className="text-[10px] font-black uppercase text-slate-400 block tracking-widest mb-1 md:mb-2 leading-none">Category</span>
+                        <span className="text-lg md:text-xl font-black italic leading-none uppercase truncate block">男子 鉄棒 / Horizontal Bar</span>
                     </div>
                 </div>
-                <div className="flex gap-4 font-sans text-slate-900">
-                    <div className="text-center bg-white px-6 py-4 rounded-2xl border border-slate-200 shadow-sm">
+                <div className="flex gap-4 font-sans text-slate-900 w-full sm:w-auto justify-center">
+                    <div className="text-center bg-white px-4 md:px-6 py-3 md:py-4 rounded-2xl border border-slate-200 shadow-sm flex-1 sm:flex-none">
                         <span className="text-[10px] font-bold block text-slate-400 uppercase mb-2 leading-none">D-Score</span>
-                        <span className="text-2xl font-black text-blue-600 leading-none">5.2</span>
+                        <span className="text-xl md:text-2xl font-black text-blue-600 leading-none">5.2</span>
                     </div>
-                    <div className="text-center bg-white px-6 py-4 rounded-2xl border border-slate-200 shadow-sm">
+                    <div className="text-center bg-white px-4 md:px-6 py-3 md:py-4 rounded-2xl border border-slate-200 shadow-sm flex-1 sm:flex-none">
                         <span className="text-[10px] font-bold block text-slate-400 uppercase mb-2 leading-none">E-Score</span>
-                        <span className="text-2xl font-black text-amber-600 leading-none">8.1</span>
+                        <span className="text-xl md:text-2xl font-black text-amber-600 leading-none">8.1</span>
                     </div>
                 </div>
             </div>
             
-            <div className="p-8 md:p-14 space-y-14 text-slate-900 text-left">
-                <div className="space-y-6">
+            <div className="p-6 sm:p-8 md:p-14 space-y-10 md:space-y-14 text-slate-900 text-left">
+                <div className="space-y-4 md:space-y-6">
                     <h4 className="flex items-center gap-3 font-black text-slate-400 text-xs uppercase tracking-widest leading-none">
-                        <Search className="w-5 h-5 text-indigo-500" /> Dスコア判定の境界線
+                        <Search className="w-5 h-5 text-indigo-500 shrink-0" /> Dスコア判定の境界線
                     </h4>
-                    <div className="bg-red-50 border border-red-100 rounded-[32px] p-8 relative overflow-hidden shadow-inner text-left">
-                        <div className="absolute top-0 right-0 bg-red-600 text-white px-5 py-2 font-black text-[10px] uppercase tracking-tighter rounded-bl-xl">格下げ判定 / Downgraded</div>
-                        <h5 className="text-xl font-black mb-4 text-slate-900 leading-[1.4] italic">伸身トカチェフ (D難度) → C判定への格下げ</h5>
-                        <p className="text-slate-600 leading-[1.9] text-sm font-medium">
+                    <div className="bg-red-50 border border-red-100 rounded-[24px] md:rounded-[32px] p-6 md:p-8 relative overflow-hidden shadow-inner text-left">
+                        <div className="absolute top-0 right-0 bg-red-600 text-white px-4 md:px-5 py-2 font-black text-[9px] md:text-[10px] uppercase tracking-tighter rounded-bl-xl">格下げ判定 / Downgraded</div>
+                        <h5 className="text-lg md:text-xl font-black mb-4 text-slate-900 leading-[1.4] italic pr-16 md:pr-0">伸身トカチェフ (D難度) → C判定への格下げ</h5>
+                        <p className="text-slate-600 leading-[1.8] md:leading-[1.9] text-xs md:text-sm font-medium">
                             バーを越える瞬間に<span className="font-bold text-red-600 underline underline-offset-4 decoration-2">45°以上の腰曲がり</span>が確認されました。これにより伸身姿勢とは認められず、<span className="font-bold text-slate-900 italic font-black uppercase">C難度のトカチェフ</span>として判定されます。練習の段階から、蹴り出しのタイミングをコンマ数秒遅らせる意識が必要です。
                         </p>
                     </div>
                 </div>
 
-                <div className="space-y-6">
+                <div className="space-y-4 md:space-y-6">
                     <h4 className="flex items-center gap-3 font-black text-slate-400 text-xs uppercase tracking-widest leading-none">
-                        <Zap className="w-5 h-5 text-amber-500" /> Eスコア可視化
+                        <Zap className="w-5 h-5 text-amber-500 shrink-0" /> Eスコア可視化
                     </h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className="bg-slate-50 p-8 rounded-[32px] border border-slate-200 shadow-sm hover:border-amber-200 transition-colors text-left">
-                            <div className="flex justify-between items-center mb-4 text-slate-900">
-                                <span className="font-bold text-sm leading-none text-left text-slate-900">車輪：膝の曲がり</span>
-                                <span className="font-black text-amber-600 bg-amber-100 px-3 py-1.5 rounded-lg text-xs leading-none">-0.1</span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-8">
+                        <div className="bg-slate-50 p-6 md:p-8 rounded-[24px] md:rounded-[32px] border border-slate-200 shadow-sm text-left">
+                            <div className="flex justify-between items-center mb-4 text-slate-900 gap-2">
+                                <span className="font-bold text-sm leading-tight text-left text-slate-900">車輪：膝の曲がり</span>
+                                <span className="font-black text-amber-600 bg-amber-100 px-3 py-1.5 rounded-lg text-xs leading-none shrink-0">-0.1</span>
                             </div>
                             <p className="text-xs text-slate-500 italic leading-[1.8]">倒立付近でわずかに膝が緩んでいます。実施全体に影響するポイントです。</p>
                         </div>
-                        <div className="bg-slate-50 p-8 rounded-[32px] border border-slate-200 shadow-sm hover:border-red-200 transition-colors text-left">
-                            <div className="flex justify-between items-center mb-4 text-slate-900">
-                                <span className="font-bold text-sm text-red-700 leading-none font-black italic leading-none text-left">トカチェフ：姿勢欠陥</span>
-                                <span className="font-black text-amber-600 bg-amber-100 px-3 py-1.5 rounded-lg text-xs leading-none">-0.3</span>
+                        <div className="bg-slate-50 p-6 md:p-8 rounded-[24px] md:rounded-[32px] border border-slate-200 shadow-sm text-left">
+                            <div className="flex justify-between items-center mb-4 text-slate-900 gap-2">
+                                <span className="font-bold text-sm text-red-700 leading-tight font-black italic text-left">トカチェフ：姿勢欠陥</span>
+                                <span className="font-black text-amber-600 bg-amber-100 px-3 py-1.5 rounded-lg text-xs leading-none shrink-0">-0.3</span>
                             </div>
                             <p className="text-xs text-slate-500 italic leading-[1.8]">前述の腰曲がりにより、姿勢の大きな乱れとして0.3以上の減点となります。</p>
                         </div>
                     </div>
                 </div>
 
-                <div className="bg-slate-900 text-white p-10 rounded-[32px] relative shadow-2xl overflow-hidden group text-left">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-[40px] group-hover:bg-amber-500/20 transition-all duration-500"></div>
-                    <div className="absolute -top-4 left-8 bg-amber-500 text-slate-900 font-black px-6 py-2 rounded-full text-xs uppercase tracking-widest italic leading-none shadow-lg">Solution</div>
-                    <p className="text-lg md:text-xl leading-[1.9] font-medium border-l-4 border-amber-500 pl-8 italic">
+                <div className="bg-slate-900 text-white p-6 md:p-10 rounded-[24px] md:rounded-[32px] relative shadow-xl md:shadow-2xl overflow-hidden group text-left">
+                    <div className="absolute top-0 right-0 w-24 h-24 md:w-32 md:h-32 bg-amber-500/10 rounded-full blur-2xl md:blur-[40px] group-hover:bg-amber-500/20 transition-all duration-500"></div>
+                    <div className="absolute -top-4 left-6 md:left-8 bg-amber-500 text-slate-900 font-black px-4 md:px-6 py-2 rounded-full text-[10px] md:text-xs uppercase tracking-widest italic leading-none shadow-lg">Solution</div>
+                    <p className="text-base md:text-lg leading-[1.8] md:leading-[1.9] font-medium border-l-4 border-amber-500 pl-4 md:pl-8 italic mt-4 md:mt-0">
                         「このトカチェフ1つで、<span className="text-amber-500 font-black underline decoration-amber-500/30 underline-offset-4 tracking-tight">合計0.4点</span>をロスしています。姿勢を正すだけで、新たな技術を習得せずともスコアは大幅に跳ね上がります。」
                     </p>
                 </div>
@@ -391,64 +393,64 @@ const App = () => {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-32 bg-slate-50 text-slate-900 rounded-t-[60px] lg:rounded-t-[100px] shadow-[0_-20px_100px_rgba(0,0,0,0.7)] relative z-20">
+      <section id="services" className="py-24 md:py-32 bg-slate-50 text-slate-900 rounded-t-[40px] lg:rounded-t-[100px] shadow-[0_-10px_30px_rgba(0,0,0,0.3)] md:shadow-[0_-20px_100px_rgba(0,0,0,0.7)] relative z-20 w-full border-t border-slate-200">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 text-slate-900">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-12 text-left">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-24 gap-8 md:gap-12 text-left">
             <div className="max-w-2xl">
-              <span className="text-amber-600 font-black tracking-widest text-xs uppercase block mb-6 leading-none">Strategic Selection</span>
-              <h2 className="text-5xl md:text-7xl font-black mb-10 tracking-tighter leading-[1.25] italic uppercase text-slate-900 text-left">The Plans.</h2>
-              <p className="text-xl text-slate-500 font-medium leading-[1.85] text-left">
+              <span className="text-amber-600 font-black tracking-widest text-xs uppercase block mb-4 md:mb-6 leading-none">Strategic Selection</span>
+              <h2 className="text-4xl md:text-7xl font-black mb-6 md:mb-10 tracking-tighter leading-[1.25] italic uppercase text-slate-900 text-left">The Plans.</h2>
+              <p className="text-base md:text-xl text-slate-500 font-medium leading-[1.85] text-left">
                 プロの視点で、あなたの現在の実力を証明し、<br className="hidden md:block" />
                 弱点を明確にするための2つの解析プラン。
               </p>
             </div>
-            <div className="text-right">
-              <div className="bg-slate-900 text-white px-10 py-4 rounded-full text-sm font-black uppercase tracking-widest shadow-2xl mb-5 inline-block italic leading-none">
+            <div className="text-left md:text-right">
+              <div className="bg-slate-900 text-white px-6 md:px-10 py-3 md:py-4 rounded-full text-xs md:text-sm font-black uppercase tracking-widest shadow-2xl mb-3 md:mb-5 inline-block italic leading-none">
                  同一週の複数申し込み可
               </div>
               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] italic leading-none">Orders can be combined at any time</p>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16">
             {/* Single Plan */}
-            <div className="relative group overflow-hidden bg-white rounded-[60px] p-12 md:p-14 border border-slate-100 shadow-xl hover:shadow-2xl transition-all duration-700 text-left flex flex-col">
+            <div className="relative group overflow-hidden bg-white rounded-[40px] md:rounded-[60px] p-8 md:p-14 border border-slate-100 shadow-xl hover:shadow-2xl transition-all duration-700 text-left flex flex-col">
               <div className="relative z-10 flex flex-col h-full">
-                <div className="flex justify-between items-start mb-16 text-slate-900">
-                  <div className="p-8 bg-slate-50 shadow-inner rounded-[32px] border border-slate-100 group-hover:scale-105 transition-transform duration-500 text-slate-900">
-                    <Play className="w-12 h-12 text-blue-600 fill-current" />
+                <div className="flex justify-between items-start mb-12 md:mb-16 text-slate-900">
+                  <div className="p-6 md:p-8 bg-slate-50 shadow-inner rounded-[24px] md:rounded-[32px] border border-slate-100 group-hover:scale-105 transition-transform duration-500 text-slate-900">
+                    <Play className="w-8 h-8 md:w-12 md:h-12 text-blue-600 fill-current" />
                   </div>
-                  <div className="text-right font-sans text-slate-900 flex flex-col items-end gap-3">
-                    <div className="text-[10px] font-black bg-slate-50 border border-slate-200 text-slate-400 px-5 py-2 rounded-full uppercase tracking-widest shadow-sm leading-none">
+                  <div className="text-right font-sans text-slate-900 flex flex-col items-end gap-2 md:gap-3">
+                    <div className="text-[9px] md:text-[10px] font-black bg-slate-50 border border-slate-200 text-slate-400 px-4 md:px-5 py-1.5 md:py-2 rounded-full uppercase tracking-widest shadow-sm leading-none">
                         Single Plan
                     </div>
-                    <div className="text-[11px] font-black text-amber-600 uppercase tracking-widest italic underline decoration-amber-500/30 underline-offset-8 leading-none">Weekly Limit: 30 Clips</div>
-                    <div className="text-6xl font-black tracking-tighter flex items-baseline gap-1 leading-none text-slate-900 mt-2">
-                      <span className="text-3xl font-bold italic text-slate-900">¥</span>300
+                    <div className="text-[10px] md:text-[11px] font-black text-amber-600 uppercase tracking-widest italic underline decoration-amber-500/30 underline-offset-4 md:underline-offset-8 leading-none">Weekly Limit: 20 Clips</div>
+                    <div className="text-4xl md:text-6xl font-black tracking-tighter flex items-baseline gap-1 leading-none text-slate-900 mt-2">
+                      <span className="text-2xl md:text-3xl font-bold italic text-slate-900">¥</span>300
                     </div>
                   </div>
                 </div>
                 
-                <h3 className="text-3xl md:text-4xl font-black mb-10 italic uppercase tracking-tighter border-l-4 border-blue-600 pl-8 leading-[1.35] text-slate-900 text-left">【1種目】単品プラン</h3>
-                <p className="text-slate-500 text-lg md:text-xl mb-14 font-medium leading-[1.95] text-left">
+                <h3 className="text-2xl md:text-4xl font-black mb-6 md:mb-10 italic uppercase tracking-tighter border-l-4 border-blue-600 pl-4 md:pl-8 leading-[1.35] text-slate-900 text-left">【1種目】単品プラン</h3>
+                <p className="text-slate-500 text-base md:text-xl mb-10 md:mb-14 font-medium leading-[1.8] md:leading-[1.95] text-left">
                   特定種目の課題を最短で解決。Dスコア判定とEスコアの細かな内訳を、PDFレポートに凝縮してお届けします。
                 </p>
                 
-                <ul className="space-y-10 mb-16 flex-grow text-slate-900">
-                  <li className="flex items-center gap-6 font-bold text-slate-700">
-                      <CheckCircle className="w-9 h-9 text-blue-600 shrink-0 shadow-lg shadow-blue-500/10" />
+                <ul className="space-y-6 md:space-y-10 mb-12 md:mb-16 flex-grow text-slate-900">
+                  <li className="flex items-center gap-4 md:gap-6 font-bold text-slate-700">
+                      <CheckCircle className="w-6 h-6 md:w-9 md:h-9 text-blue-600 shrink-0 shadow-lg shadow-blue-500/10" />
                       <div className="leading-tight text-left">
-                        週 <span className="text-blue-600 text-2xl font-black font-sans leading-none">30演技</span> 限定受付
-                        <span className="block text-[11px] text-slate-400 mt-2 font-medium italic leading-none">※1人で何演技でも申し込み可能</span>
+                        週 <span className="text-blue-600 text-xl md:text-2xl font-black font-sans leading-none">20演技</span> 限定受付
+                        <span className="block text-[10px] md:text-[11px] text-slate-400 mt-1 md:mt-2 font-medium italic leading-none">※1人で複数可。ご依頼状況により随時枠数を追加します。</span>
                       </div>
                   </li>
-                  <li className="flex items-center gap-6 font-bold text-slate-700 leading-none">
-                    <CheckCircle className="w-9 h-9 text-blue-600 shrink-0 shadow-lg shadow-blue-500/10" />
-                    <span className="leading-tight text-lg leading-none text-left">技の認定・格下げの境界線を明示</span>
+                  <li className="flex items-center gap-4 md:gap-6 font-bold text-slate-700 leading-none">
+                    <CheckCircle className="w-6 h-6 md:w-9 md:h-9 text-blue-600 shrink-0 shadow-lg shadow-blue-500/10" />
+                    <span className="leading-tight text-sm md:text-lg leading-none text-left">技の認定・格下げの境界線を明示</span>
                   </li>
-                  <li className="flex items-center gap-6 font-bold text-slate-700 leading-none">
-                    <CheckCircle className="w-9 h-9 text-blue-600 shrink-0 shadow-lg shadow-blue-500/10" />
-                    <span className="leading-tight text-lg italic uppercase tracking-tighter tracking-tight text-left">Strategic Advice</span>
+                  <li className="flex items-center gap-4 md:gap-6 font-bold text-slate-700 leading-none">
+                    <CheckCircle className="w-6 h-6 md:w-9 md:h-9 text-blue-600 shrink-0 shadow-lg shadow-blue-500/10" />
+                    <span className="leading-tight text-sm md:text-lg italic uppercase tracking-tighter text-left">Strategic Advice</span>
                   </li>
                 </ul>
 
@@ -456,59 +458,59 @@ const App = () => {
                   href={LINKS.SINGLE}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full mt-auto bg-slate-900 text-white py-8 rounded-[30px] font-black text-2xl flex items-center justify-center gap-4 transition-all hover:scale-[1.03] shadow-2xl shadow-slate-900/20 italic uppercase tracking-tighter"
+                  className="w-full mt-auto bg-slate-900 text-white py-5 md:py-8 rounded-[20px] md:rounded-[30px] font-black text-xl md:text-2xl flex items-center justify-center gap-3 md:gap-4 transition-all hover:scale-[1.03] shadow-2xl shadow-slate-900/20 italic uppercase tracking-tighter"
                 >
-                  Request Single <ExternalLink size={24} />
+                  Request Single <ExternalLink size={20} className="md:w-6 md:h-6" />
                 </a>
               </div>
             </div>
 
             {/* Premium Pack */}
-            <div className="relative group overflow-hidden bg-slate-900 text-white rounded-[60px] p-12 md:p-14 shadow-[0_50px_100px_-30px_rgba(0,0,0,0.6)] transition-all duration-700 border border-slate-800 text-white text-left flex flex-col">
-              <div className="absolute inset-0 bg-gradient-to-br from-amber-600/15 to-transparent opacity-60"></div>
+            <div className="relative group overflow-hidden bg-slate-900 text-white rounded-[40px] md:rounded-[60px] p-8 md:p-14 shadow-lg md:shadow-[0_50px_100px_-30px_rgba(0,0,0,0.6)] transition-all duration-700 border border-slate-800 text-left flex flex-col">
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-600/10 md:from-amber-600/15 to-transparent opacity-60"></div>
               
               <div className="relative z-10 flex flex-col h-full">
-                <div className="flex justify-between items-start mb-16 text-white">
-                  <div className="p-8 bg-amber-500 text-slate-900 shadow-2xl rounded-[32px] animate-pulse group-hover:scale-105 transition-transform duration-500 text-slate-900">
-                    <TrendingUp className="w-12 h-12 text-slate-900" />
+                <div className="flex justify-between items-start mb-12 md:mb-16 text-white">
+                  <div className="p-6 md:p-8 bg-amber-500 text-slate-900 shadow-xl md:shadow-2xl rounded-[24px] md:rounded-[32px] md:animate-pulse group-hover:scale-105 transition-transform duration-500">
+                    <TrendingUp className="w-8 h-8 md:w-12 md:h-12 text-slate-900" />
                   </div>
-                  <div className="text-right font-sans text-white flex flex-col items-end gap-3">
-                    <div className="text-[10px] font-black bg-white/10 border border-white/10 text-white/50 px-5 py-2 rounded-full uppercase tracking-widest shadow-lg leading-none">
+                  <div className="text-right font-sans text-white flex flex-col items-end gap-2 md:gap-3">
+                    <div className="text-[9px] md:text-[10px] font-black bg-white/10 border border-white/10 text-white/50 px-4 md:px-5 py-1.5 md:py-2 rounded-full uppercase tracking-widest shadow-lg leading-none">
                         Full Package
                     </div>
-                    <div className="text-[12px] font-black text-amber-500 uppercase tracking-widest italic underline decoration-amber-500/30 underline-offset-8 leading-none">Weekly Limit: 20 Users</div>
-                    <div className="text-6xl font-black tracking-tighter flex items-baseline gap-1 leading-none text-amber-500 mt-2">
-                      <span className="text-3xl font-bold italic text-amber-500">¥</span>1,500
+                    <div className="text-[10px] md:text-[12px] font-black text-amber-500 uppercase tracking-widest italic underline decoration-amber-500/30 underline-offset-4 md:underline-offset-8 leading-none">Weekly Limit: 15 Users</div>
+                    <div className="text-4xl md:text-6xl font-black tracking-tighter flex items-baseline gap-1 leading-none text-amber-500 mt-2">
+                      <span className="text-2xl md:text-3xl font-bold italic text-amber-500">¥</span>1,500
                     </div>
                   </div>
                 </div>
                 
-                <h3 className="text-3xl md:text-4xl font-black mb-10 italic uppercase tracking-tighter text-amber-500 border-l-4 border-amber-500 pl-8 leading-[1.35] text-amber-500 text-left">【6種目】フルパック</h3>
-                <p className="text-slate-300 text-lg md:text-xl mb-14 font-medium leading-[1.85] text-left">
+                <h3 className="text-2xl md:text-4xl font-black mb-6 md:mb-10 italic uppercase tracking-tighter text-amber-500 border-l-4 border-amber-500 pl-4 md:pl-8 leading-[1.35] text-left">【6種目】フルパック</h3>
+                <p className="text-slate-300 text-base md:text-xl mb-10 md:mb-14 font-medium leading-[1.8] md:leading-[1.85] text-left">
                   男子全種目を網羅し、大会本番の合計スコアを算出。総合的な実力分析から、点数を伸ばすための全体構成案を提示します。
                 </p>
                 
-                <ul className="space-y-10 mb-16 flex-grow text-white">
-                  <li className="flex items-center gap-6 font-bold leading-none text-left">
-                      <CheckCircle className="w-9 h-9 text-amber-500 shrink-0 shadow-lg shadow-amber-500/20 text-amber-500" />
+                <ul className="space-y-6 md:space-y-10 mb-12 md:mb-16 flex-grow text-white">
+                  <li className="flex items-center gap-4 md:gap-6 font-bold leading-none text-left">
+                      <CheckCircle className="w-6 h-6 md:w-9 md:h-9 text-amber-500 shrink-0 shadow-lg shadow-amber-500/20" />
                       <div className="leading-tight text-slate-100 text-left">
-                        週 <span className="text-amber-500 text-2xl font-black font-sans leading-none text-amber-500">20名</span> 限定受付
-                        <span className="block text-[11px] text-slate-500 mt-2 font-medium italic leading-none">※1人で複数パックの同時申し込みも可能</span>
+                        週 <span className="text-amber-500 text-xl md:text-2xl font-black font-sans leading-none">15名</span> 限定受付
+                        <span className="block text-[10px] md:text-[11px] text-slate-500 mt-1 md:mt-2 font-medium italic leading-none">※1人で複数可。ご依頼状況により随時枠数を追加します。</span>
                       </div>
                   </li>
-                  <li className="flex items-center gap-6 font-bold text-slate-100 leading-none text-left">
-                    <CheckCircle className="w-9 h-9 text-amber-500 shrink-0 shadow-lg shadow-amber-500/20 text-amber-500" />
-                    <span className="leading-tight text-lg leading-none text-left text-white">全6種目の同時解析・合計算出</span>
+                  <li className="flex items-center gap-4 md:gap-6 font-bold text-slate-100 leading-none text-left">
+                    <CheckCircle className="w-6 h-6 md:w-9 md:h-9 text-amber-500 shrink-0 shadow-lg shadow-amber-500/20" />
+                    <span className="leading-tight text-sm md:text-lg leading-none text-left text-white">全6種目の同時解析・合計算出</span>
                   </li>
-                  <li className="flex items-center gap-6 font-bold text-slate-100 leading-none text-left">
-                    <CheckCircle className="w-9 h-9 text-amber-500 shrink-0 shadow-lg shadow-amber-500/20 text-amber-500" />
-                    <div className="leading-tight text-lg leading-none text-left text-white">
+                  <li className="flex items-center gap-4 md:gap-6 font-bold text-slate-100 leading-none text-left">
+                    <CheckCircle className="w-6 h-6 md:w-9 md:h-9 text-amber-500 shrink-0 shadow-lg shadow-amber-500/20" />
+                    <div className="leading-tight text-sm md:text-lg leading-none text-left text-white">
                       実質 <span className="text-amber-500 font-black">1種目分（300円）が無料</span> に
                     </div>
                   </li>
-                  <li className="flex items-center gap-6 font-bold text-slate-100 leading-none text-left">
-                    <CheckCircle className="w-9 h-9 text-amber-500 shrink-0 shadow-lg shadow-amber-500/20 text-amber-500" />
-                    <span className="leading-tight text-lg italic uppercase tracking-tighter leading-none text-left text-white">Strategic Planning</span>
+                  <li className="flex items-center gap-4 md:gap-6 font-bold text-slate-100 leading-none text-left">
+                    <CheckCircle className="w-6 h-6 md:w-9 md:h-9 text-amber-500 shrink-0 shadow-lg shadow-amber-500/20" />
+                    <span className="leading-tight text-sm md:text-lg italic uppercase tracking-tighter leading-none text-left text-white">Strategic Planning</span>
                   </li>
                 </ul>
 
@@ -516,9 +518,9 @@ const App = () => {
                   href={LINKS.PACK}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full mt-auto bg-amber-500 text-slate-900 py-8 rounded-[30px] font-black text-2xl flex items-center justify-center gap-4 transition-all hover:scale-[1.03] shadow-[0_0_60px_rgba(245,158,11,0.5)] italic uppercase tracking-tighter"
+                  className="w-full mt-auto bg-amber-500 text-slate-900 py-5 md:py-8 rounded-[20px] md:rounded-[30px] font-black text-xl md:text-2xl flex items-center justify-center gap-3 md:gap-4 transition-all hover:scale-[1.03] shadow-[0_0_40px_rgba(245,158,11,0.4)] md:shadow-[0_0_60px_rgba(245,158,11,0.5)] italic uppercase tracking-tighter"
                 >
-                  Request Full <ExternalLink size={24} />
+                  Request Full <ExternalLink size={20} className="md:w-6 md:h-6" />
                 </a>
               </div>
             </div>
@@ -526,70 +528,17 @@ const App = () => {
         </div>
       </section>
 
-      {/* --- How It Works (ご利用の流れ) --- */}
-      <section className="py-24 bg-slate-100 relative border-t border-slate-200">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 text-slate-900">
-          <div className="text-center mb-20">
-            <span className="text-amber-600 font-black tracking-[0.5em] text-[10px] md:text-xs uppercase block mb-4 leading-none">How It Works</span>
-            <h2 className="text-4xl md:text-5xl font-black italic uppercase tracking-tighter leading-[1.35] text-slate-900">ご利用の流れ</h2>
-            <p className="mt-4 text-slate-500 font-medium">スマホひとつで、動画撮影からレポート受け取りまで完結します。</p>
-          </div>
-
-          <div className="relative">
-            <div className="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent -translate-y-1/2 z-0"></div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
-              {/* Step 1 */}
-              <div className="bg-white p-10 rounded-[40px] shadow-xl border border-slate-50 flex flex-col items-center text-center relative hover:-translate-y-2 transition-transform duration-300">
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white font-black px-6 py-2 rounded-full text-sm italic tracking-widest border-4 border-slate-100">STEP 1</div>
-                <div className="w-20 h-20 bg-blue-50 text-blue-600 rounded-3xl flex items-center justify-center mb-8 mt-4 shadow-inner">
-                  <Smartphone size={40} />
-                </div>
-                <h3 className="text-2xl font-black text-slate-900 mb-4">スマホで撮影</h3>
-                <p className="text-slate-500 font-medium leading-relaxed">
-                  いつもの練習風景や大会の演技をスマートフォン等で撮影します。特別な機材は不要です。
-                </p>
-              </div>
-
-              {/* Step 2 */}
-              <div className="bg-white p-10 rounded-[40px] shadow-xl border border-slate-50 flex flex-col items-center text-center relative hover:-translate-y-2 transition-transform duration-300">
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white font-black px-6 py-2 rounded-full text-sm italic tracking-widest border-4 border-slate-100">STEP 2</div>
-                <div className="w-20 h-20 bg-amber-50 text-amber-600 rounded-3xl flex items-center justify-center mb-8 mt-4 shadow-inner">
-                  <Upload size={40} />
-                </div>
-                <h3 className="text-2xl font-black text-slate-900 mb-4">オンラインで送信</h3>
-                <p className="text-slate-500 font-medium leading-relaxed">
-                  動画を<a href="https://gigafile.nu/" target="_blank" rel="noopener noreferrer" className="text-blue-600 font-bold underline hover:text-blue-800 transition-colors">ギガファイル便</a>でURL化し、MOSHの専用ページからお申し込み時にお送りください。
-                </p>
-              </div>
-
-              {/* Step 3 */}
-              <div className="bg-white p-10 rounded-[40px] shadow-xl border border-slate-50 flex flex-col items-center text-center relative hover:-translate-y-2 transition-transform duration-300">
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-amber-500 text-slate-900 font-black px-6 py-2 rounded-full text-sm italic tracking-widest border-4 border-slate-100">STEP 3</div>
-                <div className="w-20 h-20 bg-emerald-50 text-emerald-600 rounded-3xl flex items-center justify-center mb-8 mt-4 shadow-inner">
-                  <FileCheck size={40} />
-                </div>
-                <h3 className="text-2xl font-black text-slate-900 mb-4">レポートのお届け</h3>
-                <p className="text-slate-500 font-medium leading-relaxed">
-                  数日以内に、Dスコア・Eスコアの詳細な分析と改善アドバイスをまとめたPDFレポートをお届けします。
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* --- FAQ (よくある質問) --- */}
-      <section id="faq" className="py-24 bg-slate-50 relative border-t border-slate-200">
+      <section id="faq" className="py-20 md:py-24 bg-slate-50 relative border-t border-slate-200 w-full">
         <div className="max-w-4xl mx-auto px-6 lg:px-12 text-slate-900">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12 md:mb-16">
             <span className="text-slate-400 font-black tracking-[0.5em] text-[10px] md:text-xs uppercase block mb-4 leading-none">Questions & Answers</span>
-            <h2 className="text-4xl md:text-5xl font-black italic uppercase tracking-tighter leading-[1.35] text-slate-900 flex items-center justify-center gap-3">
-              <HelpCircle className="text-amber-500 w-10 h-10" /> よくある質問
+            <h2 className="text-3xl md:text-5xl font-black italic uppercase tracking-tighter leading-[1.35] text-slate-900 flex items-center justify-center gap-2 md:gap-3">
+              <HelpCircle className="text-amber-500 w-8 h-8 md:w-10 md:h-10" /> よくある質問
             </h2>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-4 md:space-y-6">
             {[
               {
                 q: "動画はどうやって送ればいいですか？",
@@ -608,18 +557,26 @@ const App = () => {
                 a: "もちろんです！現在のレベルは一切問いません。基礎的な技の減点ポイントを知ることが、将来の大きな成長に繋がります。安心してご依頼ください。"
               },
               {
+                q: "女子の演技も採点できますか？",
+                a: "申し訳ありません。男子のみの受付となっております。"
+              },
+              {
+                q: "一般規則のみの採点ですか？",
+                a: "いいえ。U12、U15、高校生規則、一般規則の中から選択ができます。"
+              },
+              {
                 q: "1つの動画に複数の演技が映っている場合はどうなりますか？",
                 a: "1回の依頼につき「1演技（通し、または特定の技）」の分析となります。複数の演技の分析をご希望の場合は、演技の数だけプランをご購入いただくか、フルパックをご利用ください。"
               }
             ].map((faq, index) => (
-              <div key={index} className="bg-white rounded-3xl p-8 shadow-lg border border-slate-100 hover:shadow-xl hover:border-amber-200 transition-all duration-300">
-                <h4 className="text-xl font-black text-slate-900 mb-4 flex gap-4">
-                  <span className="text-amber-500 font-serif italic">Q.</span>
-                  {faq.q}
+              <div key={index} className="bg-white rounded-2xl md:rounded-3xl p-6 md:p-8 shadow-md md:shadow-lg border border-slate-100 hover:shadow-xl hover:border-amber-200 transition-all duration-300">
+                <h4 className="text-lg md:text-xl font-black text-slate-900 mb-3 md:mb-4 flex gap-3 md:gap-4 items-start">
+                  <span className="text-amber-500 font-serif italic shrink-0">Q.</span>
+                  <span className="leading-tight">{faq.q}</span>
                 </h4>
-                <p className="text-slate-600 font-medium leading-relaxed flex gap-4 pl-1">
-                  <span className="text-slate-300 font-serif italic font-black">A.</span>
-                  {faq.a}
+                <p className="text-sm md:text-base text-slate-600 font-medium leading-relaxed flex gap-3 md:gap-4 pl-1 items-start">
+                  <span className="text-slate-300 font-serif italic font-black shrink-0">A.</span>
+                  <span className="leading-relaxed">{faq.a}</span>
                 </p>
               </div>
             ))}
@@ -628,69 +585,69 @@ const App = () => {
       </section>
 
       {/* Profile Section */}
-      <section id="profile" className="py-32 relative bg-white text-slate-900 border-t border-slate-100">
+      <section id="profile" className="py-24 md:py-32 relative bg-white text-slate-900 border-t border-slate-100 w-full">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 text-slate-900 text-left">
-          <div className="flex flex-col lg:flex-row items-center gap-24">
+          <div className="flex flex-col lg:flex-row items-center gap-16 md:gap-24">
             <div className="lg:w-2/5 w-full flex justify-center">
                <Logo size="large" theme="light" />
             </div>
             
-            <div className="lg:w-3/5 text-slate-900 text-left">
-               <span className="text-amber-600 font-black tracking-widest text-[10px] md:text-xs uppercase block mb-6 leading-none">Official Judge Profile</span>
-               <h2 className="text-4xl md:text-6xl font-black mb-12 leading-[1.4] tracking-tighter italic uppercase text-slate-900 text-left">
+            <div className="lg:w-3/5 text-slate-900 text-left w-full">
+               <span className="text-amber-600 font-black tracking-widest text-[10px] md:text-xs uppercase block mb-4 md:mb-6 leading-none">Official Judge Profile</span>
+               <h2 className="text-3xl sm:text-4xl md:text-6xl font-black mb-8 md:mb-12 leading-[1.3] md:leading-[1.4] tracking-tighter italic uppercase text-slate-900 text-left">
                  From the Bench.<br />
                  <span className="text-slate-300">To Your Victory.</span>
                </h2>
-               <p className="text-xl md:text-2xl text-slate-500 mb-14 font-medium leading-[2.1] border-l-4 border-slate-900 pl-10 italic text-left">
+               <p className="text-base sm:text-lg md:text-2xl text-slate-500 mb-10 md:mb-14 font-medium leading-[1.9] md:leading-[2.1] border-l-4 border-slate-900 pl-6 md:pl-10 italic text-left">
                  多くの大会で審判を務める中で感じるのは、<br className="hidden md:block" />
                  「あと少しの意識の違い」がスコアを大きく左右するということです。<br className="hidden md:block" />
                  日々の努力がしっかり点数に結びつくよう、審判の目線からサポートします。
                </p>
                
-               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-16 text-left">
+               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8 mb-12 md:mb-16 text-left">
                  {/* 保有資格 */}
-                 <div className="bg-white p-8 rounded-[32px] border border-slate-100 shadow-xl transition-all hover:-translate-y-1 hover:shadow-2xl hover:border-amber-200">
-                   <div className="flex items-center gap-4 mb-6">
-                     <div className="p-3 bg-slate-900 text-amber-500 rounded-2xl shadow-lg">
-                       <Award size={24} />
+                 <div className="bg-white p-6 md:p-8 rounded-[24px] md:rounded-[32px] border border-slate-100 shadow-lg md:shadow-xl transition-all hover:-translate-y-1 hover:shadow-2xl hover:border-amber-200">
+                   <div className="flex items-center gap-4 mb-4 md:mb-6">
+                     <div className="p-3 bg-slate-900 text-amber-500 rounded-xl md:rounded-2xl shadow-lg shrink-0">
+                       <Award size={20} className="md:w-6 md:h-6" />
                      </div>
-                     <h3 className="text-xl font-black italic tracking-tight text-slate-900 uppercase">保有資格</h3>
+                     <h3 className="text-lg md:text-xl font-black italic tracking-tight text-slate-900 uppercase">保有資格</h3>
                    </div>
-                   <ul className="space-y-4">
-                     <li className="flex items-center gap-3 font-bold text-slate-700">
-                       <CheckCircle className="text-amber-500 w-5 h-5 shrink-0" />
+                   <ul className="space-y-3 md:space-y-4">
+                     <li className="flex items-center gap-3 font-bold text-slate-700 text-sm md:text-base">
+                       <CheckCircle className="text-amber-500 w-4 h-4 md:w-5 md:h-5 shrink-0" />
                        <span>体操競技 1種審判員</span>
                      </li>
                    </ul>
                  </div>
 
                  {/* 主な審判実績 */}
-                 <div className="bg-white p-8 rounded-[32px] border border-slate-100 shadow-xl transition-all hover:-translate-y-1 hover:shadow-2xl hover:border-amber-200">
-                   <div className="flex items-center gap-4 mb-6">
-                     <div className="p-3 bg-slate-900 text-amber-500 rounded-2xl shadow-lg">
-                       <TrendingUp size={24} />
+                 <div className="bg-white p-6 md:p-8 rounded-[24px] md:rounded-[32px] border border-slate-100 shadow-lg md:shadow-xl transition-all hover:-translate-y-1 hover:shadow-2xl hover:border-amber-200">
+                   <div className="flex items-center gap-4 mb-4 md:mb-6">
+                     <div className="p-3 bg-slate-900 text-amber-500 rounded-xl md:rounded-2xl shadow-lg shrink-0">
+                       <TrendingUp size={20} className="md:w-6 md:h-6" />
                      </div>
-                     <h3 className="text-xl font-black italic tracking-tight text-slate-900 uppercase">主な審判実績</h3>
+                     <h3 className="text-lg md:text-xl font-black italic tracking-tight text-slate-900 uppercase">主な審判実績</h3>
                    </div>
-                   <ul className="space-y-4">
-                     <li className="flex items-center gap-3 font-bold text-slate-700">
-                       <CheckCircle className="text-amber-500 w-5 h-5 shrink-0" />
+                   <ul className="space-y-3 md:space-y-4">
+                     <li className="flex items-center gap-3 font-bold text-slate-700 text-sm md:text-base">
+                       <CheckCircle className="text-amber-500 w-4 h-4 md:w-5 md:h-5 shrink-0" />
                        <span>全日本選手権</span>
                      </li>
-                     <li className="flex items-center gap-3 font-bold text-slate-700">
-                       <CheckCircle className="text-amber-500 w-5 h-5 shrink-0" />
+                     <li className="flex items-center gap-3 font-bold text-slate-700 text-sm md:text-base">
+                       <CheckCircle className="text-amber-500 w-4 h-4 md:w-5 md:h-5 shrink-0" />
                        <span>全日本インカレ</span>
                      </li>
-                     <li className="flex items-center gap-3 font-bold text-slate-700">
-                       <CheckCircle className="text-amber-500 w-5 h-5 shrink-0" />
+                     <li className="flex items-center gap-3 font-bold text-slate-700 text-sm md:text-base">
+                       <CheckCircle className="text-amber-500 w-4 h-4 md:w-5 md:h-5 shrink-0" />
                        <span>国民スポーツ大会</span>
                      </li>
                    </ul>
                  </div>
                </div>
 
-               <a href={LINKS.PROFILE} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-6 text-slate-900 font-black text-3xl transition-all border-b-8 border-slate-900 pb-4 italic uppercase tracking-tighter hover:text-amber-600 hover:border-amber-600 leading-none text-left">
-                 MOSH Profile <ExternalLink size={32} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+               <a href={LINKS.PROFILE} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-4 md:gap-6 text-slate-900 font-black text-2xl md:text-3xl transition-all border-b-4 md:border-b-8 border-slate-900 pb-2 md:pb-4 italic uppercase tracking-tighter hover:text-amber-600 hover:border-amber-600 leading-none text-left">
+                 MOSH Profile <ExternalLink size={24} className="md:w-8 md:h-8 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                </a>
             </div>
           </div>
@@ -698,31 +655,33 @@ const App = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#0a0f1a] pt-40 pb-16 text-slate-500 relative border-t border-white/5">
+      <footer className="bg-[#0a0f1a] pt-24 md:pt-40 pb-12 md:pb-16 text-slate-500 relative border-t border-white/5 w-full">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10 text-white">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-16 mb-24 text-white">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-12 md:gap-16 mb-16 md:mb-24 text-white">
             <Logo />
-            <div className="flex flex-col gap-6 text-left md:text-right">
-              <span className="text-[11px] font-black uppercase tracking-[0.6em] text-slate-600 italic leading-none">Official Inquiry</span>
+            <div className="flex flex-col gap-4 md:gap-6 text-left md:text-right">
+              <span className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.6em] text-slate-600 italic leading-none">Official Inquiry</span>
               <a 
                 href={LINKS.CONTACT} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex items-center gap-5 text-white leading-none hover:text-amber-500 transition-colors group"
+                className="flex items-center gap-4 md:gap-5 text-white leading-none hover:text-amber-500 transition-colors group"
               >
-                <Mail className="text-amber-500 w-8 h-8 leading-none group-hover:scale-110 transition-transform" />
-                <span className="text-2xl md:text-3xl font-black italic tracking-tighter leading-none uppercase text-white">お問い合わせフォーム</span>
+                <Mail className="text-amber-500 w-6 h-6 md:w-8 md:h-8 leading-none group-hover:scale-110 transition-transform shrink-0" />
+                <span className="text-xl md:text-3xl font-black italic tracking-tighter leading-none uppercase text-white">お問い合わせフォーム</span>
               </a>
             </div>
           </div>
           
-          <div className="pt-16 border-t border-white/5 flex flex-col md:flex-row justify-between gap-12 text-[11px] font-bold uppercase tracking-[0.4em] text-white/50">
-            <div className="flex gap-14">
+          <div className="pt-10 md:pt-16 border-t border-white/5 flex flex-col md:flex-row justify-between gap-8 md:gap-12 text-[9px] md:text-[11px] font-bold uppercase tracking-[0.4em] text-white/50">
+            <div className="flex gap-8 md:gap-14 flex-wrap">
               <a href="#services" className="hover:text-amber-500 transition-colors uppercase tracking-widest leading-none">Services</a>
               <a href="#message" className="hover:text-amber-500 transition-colors uppercase tracking-widest leading-none">Message</a>
               <a href={LINKS.PROFILE} className="hover:text-amber-500 transition-colors uppercase tracking-widest leading-none">Profile</a>
             </div>
-            <div className="text-slate-600 italic leading-none uppercase">© 2026 <span className="text-white font-black italic uppercase tracking-widest text-white">GYM JUDGE ONLINE</span>. All rights reserved. Professional Quality Control.</div>
+            <div className="text-slate-600 italic leading-[1.5] md:leading-none uppercase text-left md:text-right">
+              © 2026 <span className="text-white font-black italic uppercase tracking-widest text-white block sm:inline mt-1 sm:mt-0">GYM JUDGE ONLINE</span>. All rights reserved. Professional Quality Control.
+            </div>
           </div>
         </div>
       </footer>
